@@ -10,7 +10,7 @@ import { Actions } from 'react-native-router-flux';
 export const fetchEventsData = () => {
   return (dispatch) => {
     dispatch({ type: FETCH_EVENTS_DATA });
-    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50')
+    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
       .then(res => fetchEventsDataSuccess(dispatch, res.data._embedded.events))
       .catch(err => fetchEventsDataError(dispatch, err))
   }

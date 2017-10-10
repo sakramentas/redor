@@ -45,7 +45,7 @@ export default connect(mapStateToProps, { fetchEventsData, selectEvent })(Events
 const styles = StyleSheet.create({
   title: {
     fontSize: 21,
-    color: 'white',
+    color: '#FFF',
     padding: 16
     // fontWeight: 600
   },
