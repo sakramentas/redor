@@ -1,8 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, ScrollView, ActivityIndicator } from 'react-native';
 import { get } from 'lodash';
 import { connect } from 'react-redux';
-import { fetchEventsData, selectEvent } from '../actions/eventsActions';
+import { fetchEventsData, selectEvent, fetchFeesData } from '../actions/eventsActions';
 import { EventsList } from './EventsList.js'
 
 class Events extends React.Component {
@@ -20,17 +20,26 @@ class Events extends React.Component {
   }
 
   render() {
-    const { events } = this.props;
+    const { events, isLoading } = this.props;
     return (
       <View style={styles.container}>
-        {/*<Text style={styles.title}>Events in Dublin</Text>*/}
-        <ScrollView>
-          {events && Object.keys(events).map(event => {
-            return (
-              <EventsList event={events[event]} key={events[event].id} handleEventClick={this.handleEventClick.bind(this)} />
-            )
-          })}
-        </ScrollView>
+        {isLoading ?
+          <ActivityIndicator
+            animating={isLoading}
+            style={[styles.centering, {height: 180, transform: [{scale: 1.5}]}]}
+            size="large"
+          />
+          :
+          <ScrollView>
+            {events && Object.keys(events).map(event => {
+              // fetchFeesData(events[event].id);
+              return (
+                <EventsList event={events[event]} key={events[event].id}
+                            handleEventClick={this.handleEventClick.bind(this)}/>
+              )
+            })}
+          </ScrollView>
+        }
       </View>
     );
   }
@@ -38,9 +47,10 @@ class Events extends React.Component {
 
 const mapStateToProps = state => ({
   events: get(state, 'events.list', {}),
+  isLoading: get(state, 'events.loading', false),
 });
 
-export default connect(mapStateToProps, { fetchEventsData, selectEvent })(Events);
+export default connect(mapStateToProps, { fetchEventsData, selectEvent, fetchFeesData })(Events);
 
 const styles = StyleSheet.create({
   title: {
@@ -87,5 +97,10 @@ const styles = StyleSheet.create({
     // fontWeight: '600',
     fontSize: 15,
     paddingLeft: 5
-  }
+  },
+  centering: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 8,
+  },
 });
