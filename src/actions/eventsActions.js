@@ -1,25 +1,52 @@
+import axios from 'axios';
+import { Actions } from 'react-native-router-flux';
 import {
   FETCH_EVENTS_DATA,
   FETCH_EVENTS_DATA_SUCCESS,
   FETCH_EVENTS_DATA_ERROR,
-  SELECT_EVENT
+  SELECT_EVENT,
+  FETCH_VENUE_DATA,
+  FETCH_VENUE_DATA_SUCCESS,
+  FETCH_VENUE_DATA_ERROR,
+  FETCH_FEES_DATA,
+  FETCH_FEES_DATA_SUCCESS,
+  FETCH_FEES_DATA_ERROR,
 } from './action-types';
-import axios from 'axios';
-import { Actions } from 'react-native-router-flux';
+import {
+  TICKETMASTER_ENDPOINT,
+  EVENTBRITE_ENDPOINT
+} from '../api/endpoints';
+import { createEventsDataObject } from '../api/dataBuilders';
 
 export const fetchEventsData = () => {
   return (dispatch) => {
     dispatch({ type: FETCH_EVENTS_DATA });
-    axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
-      .then(res => fetchEventsDataSuccess(dispatch, res.data._embedded.events))
-      .catch(err => fetchEventsDataError(dispatch, err))
+    buildFetchEventsData(dispatch);
   }
 };
 
-export const fetchEventsDataSuccess = (dispatch, data) =>
+export const buildFetchEventsData = (dispatch) => {
+  axios
+    .all([
+      axios.get(TICKETMASTER_ENDPOINT),
+      axios.get(EVENTBRITE_ENDPOINT)
+    ])
+    .then(axios
+      .spread((ticketmasterRes, eventbriteRes) => {
+        // do something with both responses
+        console.log("ticketmasterRes", ticketmasterRes);
+        console.log("eventbriteRes", eventbriteRes);
+        createEventsDataObject(ticketmasterRes.data._embedded.events, eventbriteRes.data.events);
+        // fetchEventsDataSuccess(dispatch, ticketmasterRes.data._embedded.events, eventbriteRes.data.events)
+      })
+    )
+    .catch(err => fetchEventsDataError(dispatch, err))
+};
+
+export const fetchEventsDataSuccess = (dispatch, data1, data2) =>
   dispatch({
     type: FETCH_EVENTS_DATA_SUCCESS,
-    payload: data
+    payload: [...data1, ...data2]
   });
 
 export const fetchEventsDataError = (dispatch, err) =>
@@ -36,5 +63,51 @@ export const selectEvent = (eventId) => {
     });
     Actions.eventPage();
   };
-
 };
+
+export const fetchVenueData = (id) => {
+  return (dispatch) => {
+    dispatch({ type: FETCH_VENUE_DATA });
+    // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
+    axios.get(`https://www.eventbriteapi.com/v3/venues/${id}/?token=SV7XRDVTKSTYYJOV4NU4`)
+      .then(res => fetchVenueDataSuccess(dispatch, res.data))
+      .catch(err => fetchVenueDataError(dispatch, err))
+  }
+};
+
+export const fetchVenueDataSuccess = (dispatch, data) =>
+  dispatch({
+    type: FETCH_VENUE_DATA_SUCCESS,
+    payload: data
+  });
+
+export const fetchVenueDataError = (dispatch, err) =>
+  dispatch({
+    type: FETCH_VENUE_DATA_ERROR,
+    payload: err
+  });
+
+export const fetchFeesData = (id) => {
+  return (dispatch) => {
+    dispatch({ type: FETCH_FEES_DATA });
+    // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
+    axios.get(`https://www.eventbriteapi.com/v3/events/${id}/ticket_classes/?token=SV7XRDVTKSTYYJOV4NU4`)
+      .then(res => fetchFeesDataSuccess(dispatch, res.data.ticket_classes, id))
+      .catch(err => fetchFeesDataError(dispatch, err))
+  }
+};
+
+export const fetchFeesDataSuccess = (dispatch, data, id) =>
+  dispatch({
+    type: FETCH_FEES_DATA_SUCCESS,
+    payload: {
+      data,
+      id
+    }
+  });
+
+export const fetchFeesDataError = (dispatch, err) =>
+  dispatch({
+    type: FETCH_FEES_DATA_ERROR,
+    payload: err
+  });
