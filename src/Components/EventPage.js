@@ -1,12 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { get } from 'lodash';
+import { get, isArray, has } from 'lodash';
 import { StyleSheet, Text, View, Image } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { RkButton, RkText, RkTheme, RkTextInput, RkModalImg } from 'react-native-ui-kitten';
+import moment from 'moment';
 import Icon from 'react-native-vector-icons/Ionicons';
+import { EventLocation } from './EventLocation';
 
-RkTheme.setType('RkText','hero',{
+RkTheme.setType('RkText', 'hero', {
   fontSize: 80
 });
 
@@ -25,20 +27,26 @@ RkTheme.setType('RkTextInput', 'rounded', {
   }
 });
 
-RkTheme.setType('RkModalImg','small',{
+RkTheme.setType('RkModalImg', 'small', {
   container: {
     width: 400,
     height: 400
   },
-  img:{
+  img: {
     width: 50,
     height: 50,
     borderRadius: 10
   }
 });
 
-export const EventPage = (props) => {
-  const images2 = props.event.images.map(img => img.url);
+export const EventPage = ({ event }) => {
+  // const images2 = event.images.map(img => img.url);
+  const dateTime = event.dates.start ? event.dates.start.dateTime : event.start.local;
+  const eventTitle = event.name.text ? event.name.text : event.name;
+  const eventDescription = event.description ? event.description.text : event.info ? event.info : '';
+  const eventPleaseNote = event.pleaseNote ? event.pleaseNote : '';
+  const eventImage = isArray(event.images) ? event.images[2].url : event.logo ? event.logo.url : '';
+  const eventVenue = get(event, '_embedded.venues[0]', null);
 
   return (
     <ParallaxScrollView
@@ -47,13 +55,13 @@ export const EventPage = (props) => {
       parallaxHeaderHeight={200}
       renderForeground={() => (
         <View style={styles.artistInfo}>
-          <Text style={styles.text}> {props.event.name} </Text>
+          <Text style={styles.text}> {eventTitle} </Text>
         </View>
       )}
       renderBackground={() => (
         <View key="background">
           <Image source={{
-            uri: props.event.images[8].url,
+            uri: eventImage,
             width: '100%',
             height: 400,
             resizeMode: 'cover',
@@ -70,21 +78,24 @@ export const EventPage = (props) => {
         </View>
       )}
     >
-      <View style={{ height: 300 }}>
+      <View style={{ height: 500 }}>
         <View style={styles.eventInfo}>
           <View style={styles.dateTime}>
-            <Text style={styles.subtext}> {props.event.dates.start.localDate}</Text>
+            <Text style={styles.subtext}> {moment(dateTime).format("MMM Do YY, h:mm a")}</Text>
           </View>
           <View style={styles.tickets}>
-
+            <RkButton>Find Tickets</RkButton>
           </View>
         </View>
-        <Text style={styles.subtext}> {props.event._embedded.venues[0].name} </Text>
-        <Text style={styles.subtext}> {props.event._embedded.venues[0].city.name}</Text>
-        <RkButton>Click me!</RkButton>
-        <RkText rkType='primary large'>Danger and Large</RkText>
-        <RkTextInput rkType='rounded' label={<Icon name={'ios-search'}/>} />
-        <RkModalImg rktype="small" source={images2} index={0} />
+        <Text style={styles.eventDescription}> {eventDescription}</Text>
+        <Text style={styles.subtext2}> {eventPleaseNote}</Text>
+        {eventVenue && <EventLocation location={eventVenue}/>}
+        {/*<Text style={styles.subtext}> {event.venue_id} </Text>*/}
+        {/*<Text style={styles.subtext2}> {event.status}</Text>*/}
+        {/*<RkButton>Click me!</RkButton>*/}
+        {/*<RkText rkType='primary large'>Danger and Large</RkText>*/}
+        {/*<RkTextInput rkType='rounded' label={<Icon name={'ios-search'}/>} />*/}
+        {/*<RkModalImg rktype="small" source={images2} index={0} />*/}
       </View>
     </ParallaxScrollView>
 
@@ -119,8 +130,8 @@ const styles = StyleSheet.create({
   },
   eventInfo: {
     flexDirection: 'row',
-    flex: 1,
-    height: 70,
+    // flex: 1,
+    height: 80,
     borderWidth: 0.5,
     borderTopColor: 'gray',
     borderBottomColor: 'gray',
@@ -135,6 +146,8 @@ const styles = StyleSheet.create({
     flex: 1,
     borderWidth: 0.5,
     borderLeftColor: 'gray',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   artistInfo: {
     flex: 1,
@@ -155,12 +168,26 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center'
   },
+  eventDescription: {
+    color: '#FFF',
+    fontSize: 16,
+    padding: 10,
+    // flexDirection: 'row'
+  },
   subtext: {
     color: '#FFF',
     // fontWeight: '600',
     fontSize: 15,
     paddingLeft: 5,
-    flex: 1,
-    flexDirection: 'row'
+    // flex: 1,
+    // flexDirection: 'row'
+  },
+  subtext2: {
+    color: '#FFF',
+    // fontWeight: '600',
+    fontSize: 14,
+    padding: 10,
+    // flex: 1,
+    // flexDirection: 'row'
   }
 });
