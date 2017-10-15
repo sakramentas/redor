@@ -1,10 +1,13 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import moment from 'moment';
+import { isArray } from 'lodash';
 
 export const EventsList = (props) => {
+  const dateTime = props.event.start ? props.event.start.local : props.event.dateTime;
+
   const buildDate = () => {
-    const localDate = props.event.dates.start.localDate;
+    const localDate = dateTime;
     const day = moment(localDate).format("DD");
     const month = moment(localDate).format("MMM");
     const year = moment(localDate).format("YYYY");
@@ -15,7 +18,8 @@ export const EventsList = (props) => {
         alignSelf: 'center',
         alignItems: 'center',
         flexWrap: 'wrap',
-        height: 80,
+        // height: 90,
+        paddingBottom: 5,
         width: 70,
         borderColor: '#f9f9f9',
         borderWidth: 1,
@@ -28,22 +32,27 @@ export const EventsList = (props) => {
     )
   };
 
+  const eventImage = isArray(props.event.images) ? props.event.images[2].url : props.event.logo ? props.event.logo.url : '';
+  const eventTitle = props.event.name.text ? props.event.name.text : props.event.name;
+
   return (
     <TouchableOpacity
       style={styles.card}
       key={props.event.id}
       onPress={() => props.handleEventClick(props.event.id)}
     >
-      <Image source={{ uri: props.event.images[8].url }} style={styles.coverImg}/>
+      <Image source={{ uri: eventImage }} style={styles.coverImg}/>
       <View style={styles.coverOverlay}/>
       <View style={styles.artistInfo}>
         <View style={styles.venue}>
           <Text
             style={styles.text}
             numberOfLines={1}
-          > {props.event.name} </Text>
-          <Text style={styles.subtext}> {props.event._embedded.venues[0].name} </Text>
-          <Text style={styles.subtext2}> {props.event._embedded.venues[0].city.name}</Text>
+          >
+            {eventTitle}
+          </Text>
+          <Text style={styles.subtext}> {props.event.is_free ? 'FREE' : 'PAID'} </Text>
+          <Text style={styles.subtext2}> {moment(dateTime).format("LT")}</Text>
         </View>
         <View style={styles.date}>
           {buildDate()}
@@ -110,7 +119,7 @@ const styles = StyleSheet.create({
     // flexDirection: 'row',
     color: '#FFF',
     // fontWeight: '600',
-    fontSize: 28,
+    fontSize: 22,
     paddingLeft: 5,
   },
   subtext: {
