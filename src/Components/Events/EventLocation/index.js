@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 
+
 export const EventLocation = (props) => {
   const { name, address, city, country } = props.location;
   console.log("eventVenue", name);

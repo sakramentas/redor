@@ -17,6 +17,7 @@ import {
   EVENTBRITE_ENDPOINT
 } from '../api/endpoints';
 import { createEventsDataObject } from '../api/dataBuilders';
+import { sortEvents } from './selectors';
 
 export const fetchEventsData = () => {
   return (dispatch) => {
@@ -33,20 +34,16 @@ export const buildFetchEventsData = (dispatch) => {
     ])
     .then(axios
       .spread((ticketmasterRes, eventbriteRes) => {
-        // do something with both responses
-        console.log("ticketmasterRes", ticketmasterRes);
-        console.log("eventbriteRes", eventbriteRes);
-        createEventsDataObject(ticketmasterRes.data._embedded.events, eventbriteRes.data.events);
-        // fetchEventsDataSuccess(dispatch, ticketmasterRes.data._embedded.events, eventbriteRes.data.events)
+        fetchEventsDataSuccess(dispatch, sortEvents([...ticketmasterRes.data._embedded.events, ...eventbriteRes.data.events]))
       })
     )
     .catch(err => fetchEventsDataError(dispatch, err))
 };
 
-export const fetchEventsDataSuccess = (dispatch, data1, data2) =>
+export const fetchEventsDataSuccess = (dispatch, data) =>
   dispatch({
     type: FETCH_EVENTS_DATA_SUCCESS,
-    payload: [...data1, ...data2]
+    payload: data,
   });
 
 export const fetchEventsDataError = (dispatch, err) =>

@@ -4,7 +4,7 @@ import moment from 'moment';
 import { isArray } from 'lodash';
 
 export const EventsList = (props) => {
-  const dateTime = props.event.start ? props.event.start.local : props.event.dateTime;
+  const dateTime = props.event.start ? props.event.start.local : props.event.dates.start.dateTime;
 
   const buildDate = () => {
     const localDate = dateTime;

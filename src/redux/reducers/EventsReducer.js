@@ -22,14 +22,16 @@ export const eventsReducer = (state = initialState, action) => {
         loading: true,
       };
     case FETCH_EVENTS_DATA_SUCCESS:
-      const newList = payload.reduce((all, item) => {
-        all[item.id] = item;
-        return all;
-      }, {});
+      const newList = payload
+        .reduce((all, item) => {
+          all[item.id] = item;
+          return all;
+        }, {});
       return {
         ...state,
         loading: false,
-        list: newList,
+        list: payload,
+        hashList: newList
       };
     case FETCH_EVENTS_DATA_ERROR:
       return {
@@ -41,8 +43,8 @@ export const eventsReducer = (state = initialState, action) => {
       return {
         ...state,
         selected: {
-          ...state.list[payload]
-        },
+          ...state.hashList[payload]
+        }
       };
     case FETCH_FEES_DATA:
       return {
