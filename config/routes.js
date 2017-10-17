@@ -1,13 +1,13 @@
 import React from 'react';
-import { Scene, Router, Stack } from 'react-native-router-flux';
-import Events from './src/scenes/Events/index'
-import EventPage from './src/Components/Events/EventPage/index'
+import { Scene, Router } from 'react-native-router-flux';
+import Events from '../src/scenes/Events/index'
+import EventPage from '../src/components/Events/EventPage/index'
 
 const RouterComponent = () => {
   return (
     <Router
-      getSceneStyle={() => ({ paddingTop: 25, backgroundColor: '#000', color: '#fff' })}
-      navigationBarStyle={{ backgroundColor: 'black' }}
+      getSceneStyle={() => ({ paddingTop: 10, backgroundColor: '#000', color: '#fff' })}
+      navigationBarStyle={{ backgroundColor: 'black', color: '#fff' }}
       titleStyle={{ color: '#FFF' }}
       barButtonIconStyle={{ tintColor: '#FFF' }}
       backButtonTextStyle={{ color: '#FFF' }}

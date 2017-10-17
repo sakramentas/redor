@@ -15,8 +15,8 @@ import {
 import {
   TICKETMASTER_ENDPOINT,
   EVENTBRITE_ENDPOINT
-} from '../api/endpoints';
-import { createEventsDataObject } from '../api/dataBuilders';
+} from '../../api/endpoints';
+import { createEventsDataObject } from '../../api/dataBuilders';
 import { sortEvents } from './selectors';
 
 export const fetchEventsData = () => {
