@@ -14,6 +14,7 @@ import {
 } from './action-types';
 import {
   TICKETMASTER_ENDPOINT,
+  buildEventbriteVenueEndpoint,
   EVENTBRITE_ENDPOINT
 } from '../../api/endpoints';
 import { createEventsDataObject } from '../../api/dataBuilders';
@@ -65,8 +66,7 @@ export const selectEvent = (eventId) => {
 export const fetchVenueData = (id) => {
   return (dispatch) => {
     dispatch({ type: FETCH_VENUE_DATA });
-    // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
-    axios.get(`https://www.eventbriteapi.com/v3/venues/${id}/?token=SV7XRDVTKSTYYJOV4NU4`)
+    axios.get(buildEventbriteVenueEndpoint(id))
       .then(res => fetchVenueDataSuccess(dispatch, res.data))
       .catch(err => fetchVenueDataError(dispatch, err))
   }
