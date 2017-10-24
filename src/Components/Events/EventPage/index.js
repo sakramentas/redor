@@ -4,17 +4,15 @@ import { get } from 'lodash';
 import { Text, View, Image, Linking } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { RkButton } from 'react-native-ui-kitten';
-import { EventLocation } from '../EventLocation/index';
+import EventLocation from '../EventLocation';
 import {
   getEventTitle,
   getEventDescription,
   getEventPleaseNote,
   getEventImage,
-  getEventVenue,
   getEventDate,
   getEventDateTime
 } from '../../../selectors/event-selectors';
-import { fetchVenueData } from '../../../redux/actions/eventsActions';
 import { styles } from './styles';
 
 class EventPage extends Component {
@@ -25,27 +23,12 @@ class EventPage extends Component {
     this.renderParallaxForeground = this.renderParallaxForeground.bind(this);
     this.renderParallaxBackground = this.renderParallaxBackground.bind(this);
   }
-
-  componentWillMount() {
-    const { event, fetchVenueData } = this.props;
-
-    !getEventVenue(event) && fetchVenueData(event.venue_id);
-  }
-
+  
   handleOpenTicket() {
     Linking
       .openURL(this.props.event.url)
       .catch(err => console.error('An error occurred', err));
   };
-
-  // renderEventVenue() {
-  //   const { event, fetchVenueData } = this.props;
-  //   if (getEventVenue(event)) {
-  //     return (<EventLocation location={getEventVenue(event)}/>)
-  //   } else {
-  //     fetchVenueData(event.venue_id);
-  //   }
-  // }
 
   renderParallaxForeground() {
     const { event } = this.props;
@@ -101,8 +84,7 @@ class EventPage extends Component {
           </View>
           <Text style={eventDescription}> {getEventDescription(event)}</Text>
           <Text style={subtext2}> {getEventPleaseNote(event)}</Text>
-          {console.log("getEventVenue(event)", getEventVenue(event))}
-          {getEventVenue(event) && <EventLocation location={getEventVenue(event)}/>}
+          <EventLocation eventData={event} />
         </View>
       </ParallaxScrollView>
     )
@@ -113,9 +95,7 @@ const mapStateToProps = state => ({
   event: get(state, 'events.selected', {}),
 });
 
-const mapDispatchToProps = {
-  fetchVenueData,
-};
+const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
