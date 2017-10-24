@@ -20,4 +20,14 @@ export const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 16,
   },
+  mapThumbnail: {
+    width: '95%',
+    height: 200,
+    flex: 1,
+    // marginTop: 20,
+    margin: 10,
+    padding: 10,
+    borderRadius: 5,
+    borderColor: '#000',
+  },
 });

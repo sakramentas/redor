@@ -27,4 +27,6 @@ export const buildEventVenueData = (venue) => ({
   address: get(venue, `address.localized_multi_line_address_display[0]`) || get(venue, `address.line1`, ''),
   city: get(venue, `address.city`) || get(venue, `city.name`, ''),
   country: get(venue, `address.country`) || get(venue, `country.name`, ''),
+  latitude: (get(venue, `address.latitude`) || get(venue, `location.latitude`, '53.445373')).substring(0, 9),
+  longitude: (get(venue, `address.longitude`) || get(venue, `location.longitude`, '-6.223878')).substring(0, 9)
 });

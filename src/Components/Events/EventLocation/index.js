@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image, Linking, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { styles } from './styles';
@@ -17,12 +17,22 @@ class EventLocation extends Component {
     !get(eventData, `_embedded.venues[0]`, false) ? fetchVenueData(eventData.venue_id, eventData.id) : null;
   }
 
+  handleOpenMap() {
+    const { venueInfo } = this.props;
+    let url = `https://www.google.ie/maps/@${getEventVenue(venueInfo).latitude},${getEventVenue(venueInfo).longitude},15z?hl=en`;
+
+    Linking
+      .openURL(url)
+      .catch(err => console.error('An error occurred', err));
+  }
+
   render() {
     const {
       venueLocation,
       venueName,
       venueAddress,
-      venueCity
+      venueCity,
+      mapThumbnail
     } = styles;
     const { venueInfo, isLoading } = this.props;
 
@@ -36,8 +46,13 @@ class EventLocation extends Component {
             <View>
               <Text style={venueName}> {getEventVenue(venueInfo).name}</Text>
               <Text style={venueAddress}> {getEventVenue(venueInfo).address}</Text>
-              <Text
-                style={venueCity}> {getEventVenue(venueInfo).city}, {getEventVenue(venueInfo).country}</Text>
+              <Text style={venueCity}> {getEventVenue(venueInfo).city}, {getEventVenue(venueInfo).country}</Text>
+              <TouchableOpacity onPress={this.handleOpenMap.bind(this)}>
+                <Image
+                  source={require('./map-tb.png')}
+                  style={mapThumbnail}
+                />
+              </TouchableOpacity>
             </View>
             }
           </View>
