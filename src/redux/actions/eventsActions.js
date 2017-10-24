@@ -63,19 +63,19 @@ export const selectEvent = (eventId) => {
   };
 };
 
-export const fetchVenueData = (id) => {
+export const fetchVenueData = (venueId, eventId) => {
   return (dispatch) => {
     dispatch({ type: FETCH_VENUE_DATA });
-    axios.get(buildEventbriteVenueEndpoint(id))
-      .then(res => fetchVenueDataSuccess(dispatch, res.data))
+    axios.get(buildEventbriteVenueEndpoint(venueId))
+      .then(res => fetchVenueDataSuccess(dispatch, res.data, eventId))
       .catch(err => fetchVenueDataError(dispatch, err))
   }
 };
 
-export const fetchVenueDataSuccess = (dispatch, data) =>
+export const fetchVenueDataSuccess = (dispatch, data, eventId) =>
   dispatch({
     type: FETCH_VENUE_DATA_SUCCESS,
-    payload: data
+    payload: { data, eventId }
   });
 
 export const fetchVenueDataError = (dispatch, err) =>

@@ -74,21 +74,34 @@ export const eventsReducer = (state = initialState, action) => {
     case FETCH_VENUE_DATA:
       return {
         ...state,
-        loading: true,
+        selected: {
+          ...state.selected,
+          loading: true,
+        }
       };
     case FETCH_VENUE_DATA_SUCCESS:
       return {
         ...state,
-        loading: false,
+        hashList: {
+          ...state.hashList,
+          [payload.eventId]: {
+            ...state.hashList[payload.eventId],
+            venueInfo: payload.data,
+          }
+        },
         selected: {
           ...state.selected,
-          venueInfo: payload
+          loading: false,
+          venueInfo: payload.data,
         }
       };
     case FETCH_VENUE_DATA_ERROR:
       return {
         ...state,
-        loading: true,
+        selected: {
+          ...state.selected,
+          loading: true,
+        }
       };
     default:
       return state;
