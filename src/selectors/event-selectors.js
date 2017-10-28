@@ -1,5 +1,6 @@
 import { get } from 'lodash';
 import moment from 'moment';
+import { buildGmapsStaticImageUrl } from '../api/endpoints';
 
 export const getEventTitle = event => get(event, `name.text`) || get(event, `name`, '');
 
@@ -22,6 +23,8 @@ export const getEventDateTime = eventData => {
 
 export const getEventDate = dateTime => moment(dateTime).format("MMM Do YY, h:mm a");
 
+export const getEventDateLong = dateTime => moment(dateTime).format("dddd, h:mm a");
+
 export const buildEventVenueData = (venue) => ({
   name: get(venue, `name`, ''),
   address: get(venue, `address.localized_multi_line_address_display[0]`) || get(venue, `address.line1`, ''),
@@ -30,3 +33,5 @@ export const buildEventVenueData = (venue) => ({
   latitude: (get(venue, `address.latitude`) || get(venue, `location.latitude`, '53.445373')).substring(0, 9),
   longitude: (get(venue, `address.longitude`) || get(venue, `location.longitude`, '-6.223878')).substring(0, 9)
 });
+
+export const getGmapsStaticImage = (lat, lon) => buildGmapsStaticImageUrl(lat, lon);
