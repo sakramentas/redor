@@ -3,7 +3,7 @@ import { Text, View, Image, Linking, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { styles } from './styles';
-import { getEventVenue } from '../../../selectors/event-selectors';
+import { getEventVenue, getGmapsStaticImage } from '../../../selectors/event-selectors';
 import { fetchVenueData } from '../../../redux/actions/eventsActions';
 
 class EventLocation extends Component {
@@ -19,7 +19,7 @@ class EventLocation extends Component {
 
   handleOpenMap() {
     const { venueInfo } = this.props;
-    let url = `https://www.google.ie/maps/@${getEventVenue(venueInfo).latitude},${getEventVenue(venueInfo).longitude},15z?hl=en`;
+    let url = `https://www.google.com/maps/search/?api=1&query=${getEventVenue(venueInfo).latitude},${getEventVenue(venueInfo).longitude}`;
 
     Linking
       .openURL(url)
@@ -49,7 +49,8 @@ class EventLocation extends Component {
               <Text style={venueCity}> {getEventVenue(venueInfo).city}, {getEventVenue(venueInfo).country}</Text>
               <TouchableOpacity onPress={this.handleOpenMap.bind(this)}>
                 <Image
-                  source={require('./map-tb.png')}
+                  // source={require('./map-tb.png')}
+                  source={{ uri: getGmapsStaticImage(getEventVenue(venueInfo).latitude, getEventVenue(venueInfo).longitude) }}
                   style={mapThumbnail}
                 />
               </TouchableOpacity>
