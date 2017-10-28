@@ -10,7 +10,7 @@ import {
   getEventDescription,
   getEventPleaseNote,
   getEventImage,
-  getEventDate,
+  getEventDateLong,
   getEventDateTime
 } from '../../../selectors/event-selectors';
 import { styles } from './styles';
@@ -23,7 +23,7 @@ class EventPage extends Component {
     this.renderParallaxForeground = this.renderParallaxForeground.bind(this);
     this.renderParallaxBackground = this.renderParallaxBackground.bind(this);
   }
-  
+
   handleOpenTicket() {
     Linking
       .openURL(this.props.event.url)
@@ -76,7 +76,7 @@ class EventPage extends Component {
         <View>
           <View style={eventInfo}>
             <View style={dateTime}>
-              <Text style={subtext}> {getEventDate(getEventDateTime(event))}</Text>
+              <Text style={subtext}> {getEventDateLong(getEventDateTime(event))}</Text>
             </View>
             <View style={tickets}>
               <RkButton onPress={this.handleOpenTicket}>Find Tickets</RkButton>
