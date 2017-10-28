@@ -20,3 +20,5 @@ export default class App extends React.Component {
     );
   }
 }
+
+console.disableYellowBox = true;
