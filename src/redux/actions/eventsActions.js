@@ -4,6 +4,9 @@ import {
   FETCH_EVENTS_DATA,
   FETCH_EVENTS_DATA_SUCCESS,
   FETCH_EVENTS_DATA_ERROR,
+  FETCH_EVENTS_BEST_DATA,
+  FETCH_EVENTS_BEST_DATA_SUCCESS,
+  FETCH_EVENTS_BEST_DATA_ERROR,
   SELECT_EVENT,
   FETCH_VENUE_DATA,
   FETCH_VENUE_DATA_SUCCESS,
@@ -14,6 +17,7 @@ import {
 } from './action-types';
 import {
   TICKETMASTER_ENDPOINT,
+  TICKETMASTER_BEST_ENDPOINT,
   buildEventbriteVenueEndpoint,
   EVENTBRITE_ENDPOINT
 } from '../../api/endpoints';
@@ -50,6 +54,39 @@ export const fetchEventsDataSuccess = (dispatch, data) =>
 export const fetchEventsDataError = (dispatch, err) =>
   dispatch({
     type: FETCH_EVENTS_DATA_ERROR,
+    payload: err
+  });
+
+export const fetchEventsBestData = () => {
+  return (dispatch) => {
+    dispatch({ type: FETCH_EVENTS_BEST_DATA });
+    buildFetchEventsBestData(dispatch);
+  }
+};
+
+export const buildFetchEventsBestData = (dispatch) => {
+  axios
+    .all([
+      axios.get(TICKETMASTER_BEST_ENDPOINT),
+      // axios.get(EVENTBRITE_ENDPOINT)
+    ])
+    .then(axios
+      .spread((ticketmasterRes) => {
+        fetchEventsBestDataSuccess(dispatch, sortEvents([...ticketmasterRes.data._embedded.events]))
+      })
+    )
+    .catch(err => fetchEventsBestDataError(dispatch, err))
+};
+
+export const fetchEventsBestDataSuccess = (dispatch, data) =>
+  dispatch({
+    type: FETCH_EVENTS_BEST_DATA_SUCCESS,
+    payload: data,
+  });
+
+export const fetchEventsBestDataError = (dispatch, err) =>
+  dispatch({
+    type: FETCH_EVENTS_BEST_DATA_ERROR,
     payload: err
   });
 

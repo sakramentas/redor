@@ -2,6 +2,9 @@ import {
   FETCH_EVENTS_DATA,
   FETCH_EVENTS_DATA_SUCCESS,
   FETCH_EVENTS_DATA_ERROR,
+  FETCH_EVENTS_BEST_DATA,
+  FETCH_EVENTS_BEST_DATA_SUCCESS,
+  FETCH_EVENTS_BEST_DATA_ERROR,
   SELECT_EVENT,
   FETCH_FEES_DATA,
   FETCH_FEES_DATA_SUCCESS,
@@ -37,6 +40,29 @@ export const eventsReducer = (state = initialState, action) => {
         hashList: newList
       };
     case FETCH_EVENTS_DATA_ERROR:
+      return {
+        ...state,
+        loading: false,
+        error: payload,
+      };
+    case FETCH_EVENTS_BEST_DATA:
+      return {
+        ...state,
+        loading: true,
+      };
+    case FETCH_EVENTS_BEST_DATA_SUCCESS:
+      const newList2 = payload
+        .reduce((all, item) => {
+          all[item.id] = item;
+          return all;
+        }, {});
+      return {
+        ...state,
+        loading: false,
+        listBest: payload,
+        hashListBest: newList2
+      };
+    case FETCH_EVENTS_BEST_DATA_ERROR:
       return {
         ...state,
         loading: false,
