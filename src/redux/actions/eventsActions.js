@@ -19,11 +19,9 @@ import {
   FETCH_CATEGORY_DATA_ERROR,
 } from './action-types';
 import {
-  TICKETMASTER_BEST_ENDPOINT,
-  EVENTBRITE_ENDPOINT,
   buildFetchEventsTicketmasterEndpoint,
   buildFetchEventsEventbriteEndpoint,
-  buildFetchVenueEventbriteEndpoint,
+  buildFetchCommonEventbriteEndpoint,
 } from '../../api/endpoints';
 import { sortEvents } from './selectors';
 
@@ -98,7 +96,7 @@ export const selectEvent = eventId => (dispatch) => {
 
 export const fetchVenueData = (venueId, eventId) => (dispatch) => {
   dispatch({ type: FETCH_VENUE_DATA });
-  axios.get(buildFetchVenueEventbriteEndpoint(venueId))
+  axios.get(buildFetchCommonEventbriteEndpoint(venueId, 'venues'))
     .then(res => fetchVenueDataSuccess(dispatch, res.data, eventId))
     .catch(err => fetchVenueDataError(dispatch, err));
 };
@@ -138,25 +136,24 @@ export const fetchFeesDataError = (dispatch, err) =>
     payload: err,
   });
 
-export const fetchCategoryData = id => (dispatch) => {
-  dispatch({ type: FETCH_FEES_DATA });
-  // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
-  axios.get(`https://www.eventbriteapi.com/v3/events/${id}/ticket_classes/?token=SV7XRDVTKSTYYJOV4NU4`)
-    .then(res => fetchCategoryDataSuccess(dispatch, res.data.ticket_classes, id))
+export const fetchCategoryData = (eventId, categoryId) => (dispatch) => {
+  dispatch({ type: FETCH_CATEGORY_DATA });
+  axios.get(buildFetchCommonEventbriteEndpoint(categoryId, 'categories'))
+    .then(res => fetchCategoryDataSuccess(dispatch, res.data, eventId))
     .catch(err => fetchCategoryDataError(dispatch, err));
 };
 
-export const fetchCategoryDataSuccess = (dispatch, data, id) =>
+export const fetchCategoryDataSuccess = (dispatch, data, eventId) =>
   dispatch({
-    type: FETCH_FEES_DATA_SUCCESS,
+    type: FETCH_CATEGORY_DATA_SUCCESS,
     payload: {
       data,
-      id,
+      eventId,
     },
   });
 
 export const fetchCategoryDataError = (dispatch, err) =>
   dispatch({
-    type: FETCH_FEES_DATA_ERROR,
+    type: FETCH_CATEGORY_DATA_ERROR,
     payload: err,
   });
