@@ -12,6 +12,9 @@ import {
   FETCH_VENUE_DATA,
   FETCH_VENUE_DATA_SUCCESS,
   FETCH_VENUE_DATA_ERROR,
+  FETCH_CATEGORY_DATA,
+  FETCH_CATEGORY_DATA_SUCCESS,
+  FETCH_CATEGORY_DATA_ERROR,
 } from '../actions/action-types';
 
 const initialState = {
@@ -129,6 +132,24 @@ export const eventsReducer = (state = initialState, action) => {
           loading: true,
         },
       };
+    // case FETCH_CATEGORY_DATA:
+    case FETCH_CATEGORY_DATA_SUCCESS:
+      return {
+        ...state,
+        hashList: {
+          ...state.hashList,
+          [payload.eventId]: {
+            ...state.hashList[payload.eventId],
+            categoryInfo: payload.data,
+          },
+        },
+        selected: {
+          ...state.selected,
+          loading: false,
+          categoryInfo: payload.data,
+        },
+      };
+    // case FETCH_CATEGORY_DATA_ERROR:
     default:
       return state;
   }
