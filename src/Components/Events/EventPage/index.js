@@ -11,7 +11,7 @@ import {
   getEventPleaseNote,
   getEventImage,
   getEventDateLong,
-  getEventDateTime
+  getEventDateTime,
 } from '../../../selectors/event-selectors';
 import { styles } from './styles';
 
@@ -28,7 +28,7 @@ class EventPage extends Component {
     Linking
       .openURL(this.props.event.url)
       .catch(err => console.error('An error occurred', err));
-  };
+  }
 
   renderParallaxForeground() {
     const { event } = this.props;
@@ -37,7 +37,7 @@ class EventPage extends Component {
       <View style={styles.artistInfo}>
         <Text style={styles.text}> {getEventTitle(event)} </Text>
       </View>
-    )
+    );
   }
 
   renderParallaxBackground() {
@@ -49,9 +49,9 @@ class EventPage extends Component {
           source={{ uri: getEventImage(event) }}
           style={styles.headerBgImage}
         />
-        <View style={styles.headerOverlay}/>
+        <View style={styles.headerOverlay} />
       </View>
-    )
+    );
   }
 
   render() {
@@ -62,7 +62,7 @@ class EventPage extends Component {
       subtext,
       tickets,
       eventDescription,
-      subtext2
+      subtext2,
     } = styles;
 
     return (
@@ -87,7 +87,7 @@ class EventPage extends Component {
           <EventLocation eventData={event} />
         </View>
       </ParallaxScrollView>
-    )
+    );
   }
 }
 
@@ -99,5 +99,5 @@ const mapDispatchToProps = {};
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(EventPage);

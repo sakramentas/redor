@@ -6,12 +6,12 @@ import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
 import {
   getEventTitle,
   getEventImage,
-  getEventDateTime
+  getEventDateTime,
 } from '../../../selectors/event-selectors';
 
 export const EventCardLarge = ({ event, handleEventClick }) => {
@@ -24,7 +24,7 @@ export const EventCardLarge = ({ event, handleEventClick }) => {
     eventTitle,
     subtext,
     subtext2,
-    eventInfoRight
+    eventInfoRight,
   } = styles;
 
   const triggerClick = () => {
@@ -41,7 +41,7 @@ export const EventCardLarge = ({ event, handleEventClick }) => {
         source={{ uri: getEventImage(event) }}
         style={eventBgImg}
       />
-      <View style={coverOverlay}/>
+      <View style={coverOverlay} />
       <View style={eventInfo}>
         <View style={eventInfoLeft}>
           <Text
@@ -51,12 +51,12 @@ export const EventCardLarge = ({ event, handleEventClick }) => {
             {getEventTitle(event)}
           </Text>
           <Text style={subtext}> {event.is_free ? 'FREE' : 'PAID'} </Text>
-          <Text style={subtext2}> {moment(getEventDateTime(event)).format("LT")}</Text>
+          <Text style={subtext2}> {moment(getEventDateTime(event)).format('LT')}</Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={getEventDateTime(event)}/>
+          <DateTimeBox dateTime={getEventDateTime(event)} />
         </View>
       </View>
     </TouchableOpacity>
-  )
+  );
 };

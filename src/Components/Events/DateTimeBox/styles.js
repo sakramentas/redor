@@ -9,21 +9,21 @@ export const styles = StyleSheet.create({
     // height: 90,
     paddingBottom: 5,
     width: 70,
-    borderColor: '#f9f9f9',
+    borderColor: '#ffb009',
     borderWidth: 1,
     borderRadius: 5,
   },
   dateTimeBoxDay: {
     fontSize: 30,
     color: 'white',
-    fontWeight: '700'
+    fontWeight: '700',
   },
   dateTimeBoxMonth: {
     fontSize: 20,
-    color: 'white'
+    color: '#ffb009',
   },
   dateTimeBoxYear: {
     fontSize: 15,
-    color: 'white'
-  }
+    color: 'white',
+  },
 });

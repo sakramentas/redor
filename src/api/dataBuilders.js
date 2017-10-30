@@ -47,13 +47,11 @@
 
 import axios from 'axios';
 
-export const fetchCategoryDataEventbrite = (id) => {
-  return (dispatch) => {
-    // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
-    axios.get(`https://www.eventbriteapi.com/v3/categories/${id}/?token=SV7XRDVTKSTYYJOV4NU4`)
-      .then(res => fetchVenueDataSuccess(dispatch, res.data))
-      .catch(err => fetchVenueDataError(dispatch, err))
-  }
+export const fetchCategoryDataEventbrite = id => (dispatch) => {
+  // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
+  axios.get(`https://www.eventbriteapi.com/v3/categories/${id}/?token=SV7XRDVTKSTYYJOV4NU4`)
+    .then(res => fetchVenueDataSuccess(dispatch, res.data))
+    .catch(err => fetchVenueDataError(dispatch, err));
 };
 
 
@@ -69,18 +67,16 @@ export const createCommonObjectTicketmaster = (data) => {
     venue: {},
   };
 
-  const hashObject = (data) => {
-    return [data]
-      .reduce((all, item) => {
-        all[item.id] = item;
-        return all;
-      }, {});
-  };
+  const hashObject = data => [data]
+    .reduce((all, item) => {
+      all[item.id] = item;
+      return all;
+    }, {});
 
   return hashObject(data)
-    .map(event => {
+    .map((event) => {
       newObject.name = event.name;
       newObject.id = event.id;
       newObject.type = event.id;
-    })
+    });
 };

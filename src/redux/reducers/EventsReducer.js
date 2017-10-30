@@ -11,12 +11,12 @@ import {
   FETCH_FEES_DATA_ERROR,
   FETCH_VENUE_DATA,
   FETCH_VENUE_DATA_SUCCESS,
-  FETCH_VENUE_DATA_ERROR
+  FETCH_VENUE_DATA_ERROR,
 } from '../actions/action-types';
 
 const initialState = {
   loading: false,
-  list: {}
+  list: {},
 };
 
 export const eventsReducer = (state = initialState, action) => {
@@ -37,7 +37,7 @@ export const eventsReducer = (state = initialState, action) => {
         ...state,
         loading: false,
         list: payload,
-        hashList: newList
+        hashList: newList,
       };
     case FETCH_EVENTS_DATA_ERROR:
       return {
@@ -48,7 +48,7 @@ export const eventsReducer = (state = initialState, action) => {
     case FETCH_EVENTS_BEST_DATA:
       return {
         ...state,
-        loading: true,
+        // loading: true,
       };
     case FETCH_EVENTS_BEST_DATA_SUCCESS:
       const newList2 = payload
@@ -58,22 +58,22 @@ export const eventsReducer = (state = initialState, action) => {
         }, {});
       return {
         ...state,
-        loading: false,
+        // loading: false,
         listBest: payload,
-        hashListBest: newList2
+        hashListBest: newList2,
       };
     case FETCH_EVENTS_BEST_DATA_ERROR:
       return {
         ...state,
-        loading: false,
+        // loading: false,
         error: payload,
       };
     case SELECT_EVENT:
       return {
         ...state,
         selected: {
-          ...state.hashList[payload]
-        }
+          ...state.hashList[payload],
+        },
       };
     case FETCH_FEES_DATA:
       return {
@@ -88,9 +88,9 @@ export const eventsReducer = (state = initialState, action) => {
           ...state.list,
           [payload.id]: {
             ...state.list[payload.id],
-            fees: payload.data
-          }
-        }
+            fees: payload.data,
+          },
+        },
       };
     case FETCH_FEES_DATA_ERROR:
       return {
@@ -103,7 +103,7 @@ export const eventsReducer = (state = initialState, action) => {
         selected: {
           ...state.selected,
           loading: true,
-        }
+        },
       };
     case FETCH_VENUE_DATA_SUCCESS:
       return {
@@ -113,13 +113,13 @@ export const eventsReducer = (state = initialState, action) => {
           [payload.eventId]: {
             ...state.hashList[payload.eventId],
             venueInfo: payload.data,
-          }
+          },
         },
         selected: {
           ...state.selected,
           loading: false,
           venueInfo: payload.data,
-        }
+        },
       };
     case FETCH_VENUE_DATA_ERROR:
       return {
@@ -127,7 +127,7 @@ export const eventsReducer = (state = initialState, action) => {
         selected: {
           ...state.selected,
           loading: true,
-        }
+        },
       };
     default:
       return state;

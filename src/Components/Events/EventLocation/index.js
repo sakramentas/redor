@@ -14,12 +14,12 @@ class EventLocation extends Component {
   componentWillMount() {
     const { eventData, fetchVenueData } = this.props;
 
-    !get(eventData, `_embedded.venues[0]`, false) ? fetchVenueData(eventData.venue_id, eventData.id) : null;
+    !get(eventData, '_embedded.venues[0]', false) ? fetchVenueData(eventData.venue_id, eventData.id) : null;
   }
 
   handleOpenMap() {
     const { venueInfo } = this.props;
-    let url = `https://www.google.com/maps/search/?api=1&query=${getEventVenue(venueInfo).latitude},${getEventVenue(venueInfo).longitude}`;
+    const url = `https://www.google.com/maps/search/?api=1&query=${getEventVenue(venueInfo).latitude},${getEventVenue(venueInfo).longitude}`;
 
     Linking
       .openURL(url)
@@ -32,7 +32,7 @@ class EventLocation extends Component {
       venueName,
       venueAddress,
       venueCity,
-      mapThumbnail
+      mapThumbnail,
     } = styles;
     const { venueInfo, isLoading } = this.props;
 
@@ -59,12 +59,12 @@ class EventLocation extends Component {
           </View>
         }
       </View>
-    )
-  };
+    );
+  }
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  venueInfo: get(state, `events.selected.venueInfo`) || get(ownProps, `eventData._embedded.venues[0]`),
+  venueInfo: get(state, 'events.selected.venueInfo') || get(ownProps, 'eventData._embedded.venues[0]'),
   isLoading: get(state, 'events.selected.loading', false),
 });
 
@@ -72,5 +72,5 @@ const mapDispatchToProps = { fetchVenueData };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(EventLocation);

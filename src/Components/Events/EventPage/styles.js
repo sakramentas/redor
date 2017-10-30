@@ -10,19 +10,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'column',
     alignItems: 'center',
     backgroundColor: '#1f1d1c',
-    padding: 8
+    padding: 8,
   },
   headerBgImage: {
     width: '100%',
     height: '100%',
-    resizeMode: 'cover'
+    resizeMode: 'cover',
   },
   headerOverlay: {
     position: 'absolute',
     top: 0,
     width: '100%',
     backgroundColor: 'rgba(0,0,0,.4)',
-    height: 400
+    height: 400,
   },
   coverImg: {
     width: 300,
@@ -64,7 +64,7 @@ export const styles = StyleSheet.create({
     color: '#FFF',
     fontWeight: '600',
     fontSize: 25,
-    textAlign: 'center'
+    textAlign: 'center',
   },
   eventDescription: {
     color: '#FFF',
@@ -80,5 +80,5 @@ export const styles = StyleSheet.create({
     color: '#FFF',
     fontSize: 14,
     padding: 10,
-  }
+  },
 });

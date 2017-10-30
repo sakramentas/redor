@@ -12,22 +12,20 @@ export const dataModelTicketmaster = (data) => {
     categories: {},
   };
 
-  data.map(event => {
-    return  {
-      name: event.name,
-      id: event.id,
-      type: event.type,
-      image: event.images[0].url,
-      descriptions: [event.description && event.description.text, event.pleaseNote && event.pleaseNote],
-      dateTime: '',
-      promoter: {},
-      venue: {},
-      url: '',
-      categories: {},
-      embedded: event._embedded,
-      links: event._links
-    };
-  })
+  data.map(event => ({
+    name: event.name,
+    id: event.id,
+    type: event.type,
+    image: event.images[0].url,
+    descriptions: [event.description && event.description.text, event.pleaseNote && event.pleaseNote],
+    dateTime: '',
+    promoter: {},
+    venue: {},
+    url: '',
+    categories: {},
+    embedded: event._embedded,
+    links: event._links,
+  }));
 
   // const hashObject = (data) => {
   //   return [data]

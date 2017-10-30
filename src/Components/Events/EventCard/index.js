@@ -1,20 +1,20 @@
 import React from 'react';
 import moment from 'moment';
-import { styles } from './styles';
-import { DateTimeBox } from '../DateTimeBox';
 import {
   Text,
   View,
   Image,
-  TouchableOpacity
+  TouchableOpacity,
 } from 'react-native';
+import { styles } from './styles';
+import { DateTimeBox } from '../DateTimeBox';
 import {
   getEventTitle,
   getEventImage,
-  getEventDateTime
+  getEventDateTime,
 } from '../../../selectors/event-selectors';
 
-export const EventCard = ({ event, handleEventClick }) => {
+const EventCard = ({ event, handleEventClick }) => {
   const {
     eventCard,
     eventBgImg,
@@ -24,7 +24,7 @@ export const EventCard = ({ event, handleEventClick }) => {
     eventTitle,
     subtext,
     subtext2,
-    eventInfoRight
+    eventInfoRight,
   } = styles;
 
   const triggerClick = () => {
@@ -41,7 +41,7 @@ export const EventCard = ({ event, handleEventClick }) => {
         source={{ uri: getEventImage(event) }}
         style={eventBgImg}
       />
-      <View style={coverOverlay}/>
+      <View style={coverOverlay} />
       <View style={eventInfo}>
         <View style={eventInfoLeft}>
           <Text
@@ -50,13 +50,16 @@ export const EventCard = ({ event, handleEventClick }) => {
           >
             {getEventTitle(event)}
           </Text>
-          <Text style={subtext}> {event.is_free ? 'FREE' : 'PAID'} </Text>
-          <Text style={subtext2}> {moment(getEventDateTime(event)).format("LT")}</Text>
+          {/* <Text style={subtext}> {event.is_free ? 'FREE' : 'PAID'} </Text> */}
+          <Text style={subtext}> {moment(getEventDateTime(event)).format('LT')}</Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={getEventDateTime(event)}/>
+          <DateTimeBox dateTime={getEventDateTime(event)} />
         </View>
       </View>
     </TouchableOpacity>
-  )
+  );
 };
+
+export default EventCard;
+

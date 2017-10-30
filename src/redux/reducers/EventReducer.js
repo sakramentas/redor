@@ -6,7 +6,7 @@ import {
 
 const initialState = {
   loading: false,
-  list: {}
+  list: {},
 };
 
 export const eventReducer = (state = initialState, action) => {

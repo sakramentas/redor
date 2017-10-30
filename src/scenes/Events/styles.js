@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 8,
     height: 180,
-    transform: [{scale: 1.5}],
+    transform: [{ scale: 1.5 }],
   },
   loadingText: {
     color: 'white',

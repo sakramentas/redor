@@ -29,7 +29,7 @@ export const styles = StyleSheet.create({
     height: '100%',
     backgroundColor: 'rgba(0,0,0,.4)',
     top: 0,
-    left: 0
+    left: 0,
   },
   eventInfo: {
     width: '100%',
@@ -60,12 +60,12 @@ export const styles = StyleSheet.create({
   subtext: {
     color: '#ffb009',
     fontSize: 18,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   subtext2: {
     color: '#a9a9ab',
     fontSize: 17,
-    paddingLeft: 5
+    paddingLeft: 5,
   },
   dateTimeBox: {
     flexDirection: 'column',
@@ -90,5 +90,5 @@ export const styles = StyleSheet.create({
   dateTimeBoxYear: {
     fontSize: 15,
     color: 'white',
-  }
+  },
 });

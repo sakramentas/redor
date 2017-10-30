@@ -7,9 +7,9 @@ import {
   fetchEventsData,
   fetchEventsBestData,
   selectEvent,
-  fetchFeesData
+  fetchFeesData,
 } from '../../redux/actions/eventsActions';
-import { EventCard } from '../../components/Events/EventCard';
+import EventCard from '../../components/Events/EventCard';
 import { EventCardLarge } from '../../components/Events/EventCardLarge';
 import { styles } from './styles';
 
@@ -34,32 +34,32 @@ class Events extends React.Component {
     const {
       eventsScene,
       loadingIndicator,
-      loadingText
+      loadingText,
     } = styles;
-    const defaultProps = {
-      hideIndicators: false,
-      indicatorColor: '#000000',
-      indicatorSize: 20,
-      inactiveIndicatorColor: '#999999',
-      indicatorAtBottom: true,
-      indicatorOffset: 0,
-      indicatorText: '•',
-      inactiveIndicatorText: '•',
-      width: null,
-      height: 200,
-      initialPage: 0,
-      indicatorSpace: 10,
-      animate: true,
-      delay: 1000,
-      loop: true,
-    };
+    // const defaultProps = {
+    //   hideIndicators: false,
+    //   indicatorColor: '#000000',
+    //   indicatorSize: 20,
+    //   inactiveIndicatorColor: '#999999',
+    //   indicatorAtBottom: true,
+    //   indicatorOffset: 0,
+    //   indicatorText: '•',
+    //   inactiveIndicatorText: '•',
+    //   width: null,
+    //   height: 200,
+    //   initialPage: 0,
+    //   indicatorSpace: 10,
+    //   animate: true,
+    //   delay: 1000,
+    //   loop: true,
+    // };
 
     return (
       <View style={eventsScene}>
         {isLoading ?
           <View>
             <ActivityIndicator
-              animating={isLoading}
+              // animating={isLoading}
               style={loadingIndicator}
               size="large"
             />
@@ -70,33 +70,29 @@ class Events extends React.Component {
             <Carousel
               height={300}
               delay={4000}
-              indicatorAtBottom={true}
-              indicatorSize={20}s
+              indicatorAtBottom
+              indicatorSize={20}
               indicatorColor="#FFF"
             >
-              {events && Object.keys(eventsBest).map(event => {
-                return (
-                  <View style={{ marginBottom: 30 }}>
-                    <EventCardLarge
-                      event={eventsBest[event]}
-                      key={eventsBest[event].id}
-                      handleEventClick={this.handleEventClick}
-                    />
-                  </View>
-                )
-              })}
+              {events && Object.keys(eventsBest).map(event => (
+                <View style={{ marginBottom: 30 }}>
+                  <EventCardLarge
+                    event={eventsBest[event]}
+                    key={eventsBest[event].id}
+                    handleEventClick={this.handleEventClick}
+                  />
+                </View>
+                ))}
             </Carousel>
             <View style={{ marginTop: 20 }}>
               <Text style={{ color: 'white', marginBottom: 5, fontSize: 18 }}>Next Events</Text>
-              {events && Object.keys(events).map(event => {
-                return (
-                  <EventCard
-                    event={events[event]}
-                    key={events[event].id}
-                    handleEventClick={this.handleEventClick}
-                  />
-                )
-              })}
+              {events && Object.keys(events).map(event => (
+                <EventCard
+                  event={events[event]}
+                  key={events[event].id}
+                  handleEventClick={this.handleEventClick}
+                />
+                ))}
             </View>
           </ScrollView>
         }
@@ -115,10 +111,10 @@ const mapDispatchToProps = {
   fetchEventsData,
   fetchEventsBestData,
   selectEvent,
-  fetchFeesData
+  fetchFeesData,
 };
 
 export default connect(
   mapStateToProps,
-  mapDispatchToProps
+  mapDispatchToProps,
 )(Events);
