@@ -5,6 +5,7 @@ import { Text, View, Image, Linking } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { RkButton } from 'react-native-ui-kitten';
 import EventLocation from '../EventLocation';
+import EventCategory from '../EventCategory';
 import {
   getEventTitle,
   getEventDescription,
@@ -84,6 +85,7 @@ class EventPage extends Component {
           </View>
           <Text style={eventDescription}> {getEventDescription(event)}</Text>
           <Text style={subtext2}> {getEventPleaseNote(event)}</Text>
+          <EventCategory eventData={event} />
           <EventLocation eventData={event} />
         </View>
       </ParallaxScrollView>
