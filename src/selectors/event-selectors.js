@@ -1,6 +1,9 @@
 import { get } from 'lodash';
 import moment from 'moment';
-import { buildGmapsStaticImageUrl } from '../api/endpoints';
+import {
+  buildGmapsStaticImageUrl,
+  buildGmapsAnchorUrl
+} from '../api/endpoints';
 
 export const getEventTitle = event => get(event, 'name.text') || get(event, 'name', '');
 
@@ -10,7 +13,10 @@ export const getEventPleaseNote = event => get(event, 'pleaseNote', '');
 
 export const getEventImage = event => get(event, 'images[2].url') || get(event, 'logo.url', '');
 
-export const getEventVenue = event => buildEventVenueData(event);
+export const getEventVenue = state => {
+  let venueInfo = get(state, 'events.selected.venueInfo') || get(state, 'events.selected._embedded.venues[0]');
+  return venueInfo && buildEventVenueData(venueInfo);
+};
 
 export const getEventDateTime = (eventData) => {
   const buildStartTimeEventbrite = event => get(event, 'start.local', null);
@@ -34,4 +40,23 @@ export const buildEventVenueData = venue => ({
   longitude: (get(venue, 'address.longitude') || get(venue, 'location.longitude', '-6.223878')).substring(0, 9),
 });
 
-export const getGmapsStaticImage = (lat, lon) => buildGmapsStaticImageUrl(lat, lon);
+export const getGmapsStaticImageUrl = (state) => {
+  let lat = get(getEventVenue(state), 'latitude', null);
+  let lon = get(getEventVenue(state), 'longitude', null);
+
+  return lat && lon && buildGmapsStaticImageUrl(lat, lon);
+};
+
+export const getGmapsAnchorUrl = (state) => {
+  let lat = get(getEventVenue(state), 'latitude', null);
+  let lon = get(getEventVenue(state), 'longitude', null);
+
+  return lat && lon && buildGmapsAnchorUrl(lat, lon);
+};
+
+export const getCategoryData = (state) => {
+  return {
+    name: get(state, 'events.selected.categoryInfo.name') || get(state, 'events.selected.classifications[0].segment.name', ''),
+    additionalData: get(state, 'events.selected.categoryInfo.subcategories') || get(state, 'events.selected.classifications', []),
+  }
+};
