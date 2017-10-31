@@ -12,7 +12,7 @@ import {
   getEventTitle,
   getEventImage,
   getEventDateTime,
-} from '../../../selectors/event-selectors';
+} from '../selectors';
 
 export const EventCardLarge = ({ event, handleEventClick }) => {
   const {
@@ -50,8 +50,8 @@ export const EventCardLarge = ({ event, handleEventClick }) => {
           >
             {getEventTitle(event)}
           </Text>
-          <Text style={subtext}> {event.is_free ? 'FREE' : 'PAID'} </Text>
-          <Text style={subtext2}> {moment(getEventDateTime(event)).format('LT')}</Text>
+          {/*<Text style={subtext}> {event.is_free ? 'FREE' : 'PAID'} </Text>*/}
+          <Text style={subtext}> {moment(getEventDateTime(event)).format('LT')}</Text>
         </View>
         <View style={eventInfoRight}>
           <DateTimeBox dateTime={getEventDateTime(event)} />

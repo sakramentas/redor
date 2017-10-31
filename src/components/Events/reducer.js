@@ -15,7 +15,7 @@ import {
   FETCH_CATEGORY_DATA,
   FETCH_CATEGORY_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
-} from '../actions/action-types';
+} from './action-types';
 
 const initialState = {
   loading: false,

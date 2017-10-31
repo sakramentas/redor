@@ -23,7 +23,7 @@ import {
   buildFetchEventsEventbriteEndpoint,
   buildFetchCommonEventbriteEndpoint,
 } from '../../api/endpoints';
-import { sortEvents } from './selectors';
+import { sortEvents } from '../../redux/actions/selectors';
 
 
 export const fetchEventsData = () => (dispatch) => {
@@ -115,7 +115,6 @@ export const fetchVenueDataError = (dispatch, err) =>
 
 export const fetchFeesData = id => (dispatch) => {
   dispatch({ type: FETCH_FEES_DATA });
-  // axios.get('https://app.ticketmaster.com/discovery/v2/events.json?apikey=TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ&city=dublin&size=50&sort=date,name,asc')
   axios.get(`https://www.eventbriteapi.com/v3/events/${id}/ticket_classes/?token=SV7XRDVTKSTYYJOV4NU4`)
     .then(res => fetchFeesDataSuccess(dispatch, res.data.ticket_classes, id))
     .catch(err => fetchFeesDataError(dispatch, err));

@@ -3,7 +3,7 @@ import moment from 'moment';
 import {
   buildGmapsStaticImageUrl,
   buildGmapsAnchorUrl
-} from '../api/endpoints';
+} from '../../api/endpoints';
 
 export const getEventTitle = event => get(event, 'name.text') || get(event, 'name', '');
 

@@ -8,7 +8,7 @@ import {
   fetchEventsBestData,
   selectEvent,
   fetchFeesData,
-} from '../../redux/actions/eventsActions';
+} from '../../components/Events/actions';
 import EventCard from '../../components/Events/EventCard';
 import { EventCardLarge } from '../../components/Events/EventCardLarge';
 import { styles } from './styles';
@@ -36,23 +36,6 @@ class Events extends React.Component {
       loadingIndicator,
       loadingText,
     } = styles;
-    // const defaultProps = {
-    //   hideIndicators: false,
-    //   indicatorColor: '#000000',
-    //   indicatorSize: 20,
-    //   inactiveIndicatorColor: '#999999',
-    //   indicatorAtBottom: true,
-    //   indicatorOffset: 0,
-    //   indicatorText: '•',
-    //   inactiveIndicatorText: '•',
-    //   width: null,
-    //   height: 200,
-    //   initialPage: 0,
-    //   indicatorSpace: 10,
-    //   animate: true,
-    //   delay: 1000,
-    //   loop: true,
-    // };
 
     return (
       <View style={eventsScene}>

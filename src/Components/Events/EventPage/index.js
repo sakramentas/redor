@@ -13,7 +13,7 @@ import {
   getEventImage,
   getEventDateLong,
   getEventDateTime,
-} from '../../../selectors/event-selectors';
+} from '../selectors';
 import { styles } from './styles';
 
 class EventPage extends Component {
