@@ -5,27 +5,48 @@ import {
   buildGmapsAnchorUrl
 } from '../../api/endpoints';
 
-export const getEventTitle = event => get(event, 'name.text') || get(event, 'name', '');
+export const getEventTitle = (state, ownProps) => {
+  const id = get(ownProps, `event.id`);
+
+  return id && get(state, `events.hashList.${id}.name.text`) || get(state, `events.hashList.${id}.name`, '');
+};
 
 export const getEventDescription = event => get(event, 'description.text') || get(event, 'info', '');
 
 export const getEventPleaseNote = event => get(event, 'pleaseNote', '');
 
-export const getEventImage = event => get(event, 'images[2].url') || get(event, 'logo.url', '');
+export const getEventImageSelectedEvent = (state) =>
+get(state, `events.selected.images[2].url`) || get(state, `events.selected.logo.url`, '');
+
+export const getEventImage = (state, ownProps) => {
+  const id = get(ownProps, `event.id`);
+
+  return id && get(state, `events.hashList.${id}.images[2].url`) || get(state, `events.hashList.${id}.logo.url`, '');
+};
 
 export const getEventVenue = state => {
   let venueInfo = get(state, 'events.selected.venueInfo') || get(state, 'events.selected._embedded.venues[0]');
   return venueInfo && buildEventVenueData(venueInfo);
 };
 
-export const getEventDateTime = (eventData) => {
-  const buildStartTimeEventbrite = event => get(event, 'start.local', null);
-  const buildStartTimeTicketmaster = event => (event.dates ?
-    `${event.dates.start.localDate}T${event.dates.start.localTime}` : null);
-  const getStartTime = event => buildStartTimeEventbrite(event) || buildStartTimeTicketmaster(event);
+export const getEventDateTime = (state, ownProps) => {
+  const id = get(ownProps, `event.id`);
 
-  return getStartTime(eventData);
+  if (id) {
+    const buildStartTimeEventbrite = state => get(state, `events.hashList.${id}.start.local`, null);
+    const buildStartTimeTicketmaster = (state) => {
+      const localDate = get(state, `events.hashList.${id}.dates.start.localDate`, '');
+      const localTime = get(state, `events.hashList.${id}.dates.start.localTime`, '00:00:00');
+
+      return get(state, `events.hashList.${id}.dates`, null) ?
+        `${localDate}T${localTime}` : null;
+    };
+
+    return buildStartTimeEventbrite(state) || buildStartTimeTicketmaster(state);
+  }
 };
+
+export const getEventTime = (ownProps) => moment(ownProps.eventDateTime).format('LT');
 
 export const getEventDate = dateTime => moment(dateTime).format('MMM Do YY, h:mm a');
 
