@@ -1,20 +1,23 @@
 import React from 'react';
-import moment from 'moment';
+import { connect } from 'react-redux';
 import {
   Text,
   View,
   Image,
   TouchableOpacity,
 } from 'react-native';
-import { styles } from './styles';
 import { DateTimeBox } from '../DateTimeBox';
+import { selectEvent } from '../actions';
 import {
-  getEventTitle,
-  getEventImage,
   getEventDateTime,
+  getEventTime,
+  getEventImage,
+  getEventTitle,
 } from '../selectors';
+import { styles } from './styles';
 
-const EventCard = ({ event, handleEventClick }) => {
+const EventCard = (props) => {
+  const { event } = props;
   const {
     eventCard,
     eventBgImg,
@@ -27,38 +30,56 @@ const EventCard = ({ event, handleEventClick }) => {
     eventInfoRight,
   } = styles;
 
-  const triggerClick = () => {
-    handleEventClick(event.id);
-  };
+  const {
+    eventDateTime,
+    eventTime,
+    eventImage,
+    selectEvent
+  } = props;
 
   return (
     <TouchableOpacity
       style={eventCard}
       key={event.id}
-      onPress={triggerClick}
+      onPress={() => selectEvent(event.id)}
     >
       <Image
-        source={{ uri: getEventImage(event) }}
+        source={{ uri: eventImage }}
         style={eventBgImg}
       />
-      <View style={coverOverlay} />
+      <View style={coverOverlay}/>
       <View style={eventInfo}>
         <View style={eventInfoLeft}>
           <Text
             style={eventTitle}
             numberOfLines={1}
           >
-            {getEventTitle(event)}
+            {props.eventTitle}
           </Text>
-          <Text style={subtext}> {moment(getEventDateTime(event)).format('LT')}</Text>
+          <Text style={subtext}>
+            {eventTime}
+          </Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={getEventDateTime(event)} />
+          <DateTimeBox dateTime={eventDateTime}/>
         </View>
       </View>
     </TouchableOpacity>
   );
 };
 
-export default EventCard;
+const mapStateToProps = (state, ownProps) => ({
+  eventDateTime: getEventDateTime(state, ownProps),
+  eventTime: getEventTime(ownProps),
+  eventImage: getEventImage(state, ownProps),
+  eventTitle: getEventTitle(state, ownProps),
+});
+
+const mapDispatchToProps = { selectEvent };
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(EventCard);
+
 

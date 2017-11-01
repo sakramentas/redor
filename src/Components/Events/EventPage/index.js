@@ -10,7 +10,7 @@ import {
   getEventTitle,
   getEventDescription,
   getEventPleaseNote,
-  getEventImage,
+  getEventImageSelectedEvent,
   getEventDateLong,
   getEventDateTime,
 } from '../selectors';
@@ -42,12 +42,12 @@ class EventPage extends Component {
   }
 
   renderParallaxBackground() {
-    const { event } = this.props;
+    const { event, eventImage } = this.props;
 
     return (
       <View key="background">
         <Image
-          source={{ uri: getEventImage(event) }}
+          source={{ uri: eventImage }}
           style={styles.headerBgImage}
         />
         <View style={styles.headerOverlay} />
@@ -56,7 +56,7 @@ class EventPage extends Component {
   }
 
   render() {
-    const { event } = this.props;
+    const { event, eventDateTime } = this.props;
     const {
       eventInfo,
       dateTime,
@@ -66,35 +66,39 @@ class EventPage extends Component {
       subtext2,
     } = styles;
 
-    return (
-      <ParallaxScrollView
-        backgroundColor="black"
-        contentBackgroundColor="black"
-        parallaxHeaderHeight={200}
-        renderForeground={this.renderParallaxForeground}
-        renderBackground={this.renderParallaxBackground}
-      >
-        <View>
-          <View style={eventInfo}>
-            <View style={dateTime}>
-              <Text style={subtext}> {getEventDateLong(getEventDateTime(event))}</Text>
+    if (event) {
+      return (
+        <ParallaxScrollView
+          backgroundColor="black"
+          contentBackgroundColor="black"
+          parallaxHeaderHeight={200}
+          renderForeground={this.renderParallaxForeground}
+          renderBackground={this.renderParallaxBackground}
+        >
+          <View>
+            <View style={eventInfo}>
+              <View style={dateTime}>
+                <Text style={subtext}> {getEventDateLong(eventDateTime)}</Text>
+              </View>
+              <View style={tickets}>
+                <RkButton onPress={this.handleOpenTicket}>Find Tickets</RkButton>
+              </View>
             </View>
-            <View style={tickets}>
-              <RkButton onPress={this.handleOpenTicket}>Find Tickets</RkButton>
-            </View>
+            <Text style={eventDescription}> {getEventDescription(event)}</Text>
+            <Text style={subtext2}> {getEventPleaseNote(event)}</Text>
+            <EventCategory eventData={event}/>
+            <EventLocation eventData={event}/>
           </View>
-          <Text style={eventDescription}> {getEventDescription(event)}</Text>
-          <Text style={subtext2}> {getEventPleaseNote(event)}</Text>
-          <EventCategory eventData={event} />
-          <EventLocation eventData={event} />
-        </View>
-      </ParallaxScrollView>
-    );
+        </ParallaxScrollView>
+      );
+    }
   }
 }
 
-const mapStateToProps = state => ({
-  event: get(state, 'events.selected', {}),
+const mapStateToProps = (state, ownProps) => ({
+  event: get(state, 'events.selected'),
+  eventDateTime: getEventDateTime(state, ownProps),
+  eventImage: getEventImageSelectedEvent(state),
 });
 
 const mapDispatchToProps = {};
