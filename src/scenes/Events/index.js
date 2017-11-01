@@ -6,27 +6,20 @@ import Carousel from 'react-native-carousel-view';
 import {
   fetchEventsData,
   fetchEventsBestData,
-  selectEvent,
   fetchFeesData,
 } from '../../components/Events/actions';
 import EventCard from '../../components/Events/EventCard';
-import { EventCardLarge } from '../../components/Events/EventCardLarge';
+import EventCardLarge from '../../components/Events/EventCardLarge';
 import { styles } from './styles';
 
 class Events extends React.Component {
   constructor(props) {
     super(props);
-
-    this.handleEventClick = this.handleEventClick.bind(this);
   }
 
   componentWillMount() {
     this.props.fetchEventsData();
     this.props.fetchEventsBestData();
-  }
-
-  handleEventClick(eventId) {
-    this.props.selectEvent(eventId);
   }
 
   render() {
@@ -62,7 +55,6 @@ class Events extends React.Component {
                   <EventCardLarge
                     event={eventsBest[event]}
                     key={eventsBest[event].id}
-                    handleEventClick={this.handleEventClick}
                   />
                 </View>
                 ))}
@@ -73,7 +65,6 @@ class Events extends React.Component {
                 <EventCard
                   event={events[event]}
                   key={events[event].id}
-                  handleEventClick={this.handleEventClick}
                 />
                 ))}
             </View>
@@ -93,7 +84,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
   fetchEventsData,
   fetchEventsBestData,
-  selectEvent,
   fetchFeesData,
 };
 

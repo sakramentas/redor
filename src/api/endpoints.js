@@ -19,7 +19,7 @@ export const buildGmapsStaticImageUrl = (lat, lon) => {
 
 export const buildGmapsAnchorUrl = (lat, lon) => {
   const params = `api=1&query=${lat},${lon}`;
-console.log("`${GMAPS_ANCHOR_URL}?${params}`", `${GMAPS_ANCHOR_URL}?${params}`);
+
   return `${GMAPS_ANCHOR_URL}?${params}`;
 };
 
