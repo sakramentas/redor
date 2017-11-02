@@ -34,7 +34,7 @@ const EventCardLarge = (props) => {
     eventDateTime,
     eventTime,
     eventImage,
-    selectEvent
+    selectEvent,
   } = props;
 
   return (

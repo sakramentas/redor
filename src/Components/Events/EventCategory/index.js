@@ -41,8 +41,8 @@ class EventCategory extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  categoryData: getCategoryData(state)
-    // get(state, 'events.selected.categoryInfo') || get(ownProps, 'eventData.classifications[0]', null),
+  categoryData: getCategoryData(state),
+  // get(state, 'events.selected.categoryInfo') || get(ownProps, 'eventData.classifications[0]', null),
   // isLoading: get(state, 'events.selected.loading', false),
   // getCategoryName: getCategoryName(state)
 });

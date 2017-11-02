@@ -35,7 +35,7 @@ class EventLocation extends Component {
       venueCity,
       mapThumbnail,
     } = styles;
-    const { venueInfo, isLoading, gMapsStaticImageUrl} = this.props;
+    const { venueInfo, isLoading, gMapsStaticImageUrl } = this.props;
 
     return (
       <View style={venueLocation}>

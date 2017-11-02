@@ -34,7 +34,7 @@ const EventCard = (props) => {
     eventDateTime,
     eventTime,
     eventImage,
-    selectEvent
+    selectEvent,
   } = props;
 
   return (
@@ -47,7 +47,7 @@ const EventCard = (props) => {
         source={{ uri: eventImage }}
         style={eventBgImg}
       />
-      <View style={coverOverlay}/>
+      <View style={coverOverlay} />
       <View style={eventInfo}>
         <View style={eventInfoLeft}>
           <Text
@@ -61,7 +61,7 @@ const EventCard = (props) => {
           </Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={eventDateTime}/>
+          <DateTimeBox dateTime={eventDateTime} />
         </View>
       </View>
     </TouchableOpacity>
@@ -81,5 +81,4 @@ export default connect(
   mapStateToProps,
   mapDispatchToProps,
 )(EventCard);
-
 

@@ -26,7 +26,7 @@ export const getEventDateTime = (state, ownProps) => {
   const id = get(ownProps, 'event.id');
 
   if (id) {
-    const buildStartTimeEventbrite = (state) => get(state, `events.hashList.${id}.start.local`, null);
+    const buildStartTimeEventbrite = state => get(state, `events.hashList.${id}.start.local`, null);
     const buildStartTimeTicketmaster = (state) => {
       const localDate = get(state, `events.hashList.${id}.dates.start.localDate`, '');
       const localTime = get(state, `events.hashList.${id}.dates.start.localTime`, '00:00:00');

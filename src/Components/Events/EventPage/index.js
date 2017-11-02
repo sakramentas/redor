@@ -43,7 +43,7 @@ class EventPage extends Component {
           source={{ uri: eventImage }}
           style={styles.headerBgImage}
         />
-        <View style={styles.headerOverlay}/>
+        <View style={styles.headerOverlay} />
       </View>
     );
   }
@@ -84,8 +84,8 @@ class EventPage extends Component {
           </View>
           <Text style={eventDescription}> {this.props.eventDescription}</Text>
           <Text style={subtext2}> {eventPleaseNote}</Text>
-          <EventCategory eventData={event}/>
-          <EventLocation eventData={event}/>
+          <EventCategory eventData={event} />
+          <EventLocation eventData={event} />
         </View>
       </ParallaxScrollView>
     );
