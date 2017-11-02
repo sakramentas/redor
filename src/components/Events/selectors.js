@@ -2,38 +2,31 @@ import { get } from 'lodash';
 import moment from 'moment';
 import {
   buildGmapsStaticImageUrl,
-  buildGmapsAnchorUrl
+  buildGmapsAnchorUrl,
 } from '../../api/endpoints';
 
 export const getEventTitle = (state, ownProps) => {
-  const id = get(ownProps, `event.id`);
+  const id = get(ownProps, 'event.id');
 
-  return id && get(state, `events.hashList.${id}.name.text`) || get(state, `events.hashList.${id}.name`, '');
+  return id && (get(state, `events.hashList.${id}.name.text`) || get(state, `events.hashList.${id}.name`, ''));
 };
-
-export const getEventDescription = event => get(event, 'description.text') || get(event, 'info', '');
-
-export const getEventPleaseNote = event => get(event, 'pleaseNote', '');
-
-export const getEventImageSelectedEvent = (state) =>
-get(state, `events.selected.images[2].url`) || get(state, `events.selected.logo.url`, '');
 
 export const getEventImage = (state, ownProps) => {
-  const id = get(ownProps, `event.id`);
+  const id = get(ownProps, 'event.id');
 
-  return id && get(state, `events.hashList.${id}.images[2].url`) || get(state, `events.hashList.${id}.logo.url`, '');
+  return id && (get(state, `events.hashList.${id}.images[2].url`) || get(state, `events.hashList.${id}.logo.url`, ''));
 };
 
-export const getEventVenue = state => {
-  let venueInfo = get(state, 'events.selected.venueInfo') || get(state, 'events.selected._embedded.venues[0]');
+export const getEventVenue = (state) => {
+  const venueInfo = get(state, 'events.selected.venueInfo') || get(state, 'events.selected._embedded.venues[0]');
   return venueInfo && buildEventVenueData(venueInfo);
 };
 
 export const getEventDateTime = (state, ownProps) => {
-  const id = get(ownProps, `event.id`);
+  const id = get(ownProps, 'event.id');
 
   if (id) {
-    const buildStartTimeEventbrite = state => get(state, `events.hashList.${id}.start.local`, null);
+    const buildStartTimeEventbrite = (state) => get(state, `events.hashList.${id}.start.local`, null);
     const buildStartTimeTicketmaster = (state) => {
       const localDate = get(state, `events.hashList.${id}.dates.start.localDate`, '');
       const localTime = get(state, `events.hashList.${id}.dates.start.localTime`, '00:00:00');
@@ -46,11 +39,9 @@ export const getEventDateTime = (state, ownProps) => {
   }
 };
 
-export const getEventTime = (ownProps) => moment(ownProps.eventDateTime).format('LT');
+export const getEventTime = ownProps => moment(ownProps.eventDateTime).format('LT');
 
-export const getEventDate = dateTime => moment(dateTime).format('MMM Do YY, h:mm a');
-
-export const getEventDateLong = dateTime => moment(dateTime).format('dddd, h:mm a');
+export const getEventDateLong = (state, ownProps) => moment(getEventDateTime(state, ownProps)).format('dddd, h:mm a');
 
 export const buildEventVenueData = venue => ({
   name: get(venue, 'name', ''),
@@ -62,22 +53,29 @@ export const buildEventVenueData = venue => ({
 });
 
 export const getGmapsStaticImageUrl = (state) => {
-  let lat = get(getEventVenue(state), 'latitude', null);
-  let lon = get(getEventVenue(state), 'longitude', null);
+  const lat = get(getEventVenue(state), 'latitude', null);
+  const lon = get(getEventVenue(state), 'longitude', null);
 
   return lat && lon && buildGmapsStaticImageUrl(lat, lon);
 };
 
 export const getGmapsAnchorUrl = (state) => {
-  let lat = get(getEventVenue(state), 'latitude', null);
-  let lon = get(getEventVenue(state), 'longitude', null);
+  const lat = get(getEventVenue(state), 'latitude', null);
+  const lon = get(getEventVenue(state), 'longitude', null);
 
   return lat && lon && buildGmapsAnchorUrl(lat, lon);
 };
 
-export const getCategoryData = (state) => {
-  return {
-    name: get(state, 'events.selected.categoryInfo.name') || get(state, 'events.selected.classifications[0].segment.name', ''),
-    additionalData: get(state, 'events.selected.categoryInfo.subcategories') || get(state, 'events.selected.classifications', []),
-  }
-};
+export const getCategoryData = state => ({
+  name: get(state, 'events.selected.categoryInfo.name') || get(state, 'events.selected.classifications[0].segment.name', ''),
+  additionalData: get(state, 'events.selected.categoryInfo.subcategories') || get(state, 'events.selected.classifications', []),
+});
+
+// ----- Event Page selectors -----
+export const getEventDescriptionSelectedEvent = state =>
+  get(state, 'events.selected.description.text') || get(state, 'events.selected.info', '');
+
+export const getEventImageSelectedEvent = state =>
+  get(state, 'events.selected.images[2].url') || get(state, 'events.selected.logo.url', '');
+
+export const getEventPleaseNoteSelectedEvent = state => get(state, 'events.selected.pleaseNote', '');
