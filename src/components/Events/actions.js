@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Actions } from 'react-native-router-flux';
+import { Linking } from 'react-native';
 import {
   FETCH_EVENTS_DATA,
   FETCH_EVENTS_DATA_SUCCESS,
@@ -17,6 +18,7 @@ import {
   FETCH_CATEGORY_DATA,
   FETCH_CATEGORY_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
+  OPEN_TICKET,
 } from './action-types';
 import {
   buildFetchEventsTicketmasterEndpoint,
@@ -156,3 +158,10 @@ export const fetchCategoryDataError = (dispatch, err) =>
     type: FETCH_CATEGORY_DATA_ERROR,
     payload: err,
   });
+
+export const openTicket = url => (dispatch) => {
+  dispatch({ type: OPEN_TICKET });
+  Linking
+    .openURL(url)
+    .catch(err => console.error('An error occurred', err)); // eslint-disable-line no-console
+};
