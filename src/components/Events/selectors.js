@@ -39,9 +39,7 @@ export const getEventDateTime = (state, ownProps) => {
   }
 };
 
-export const getEventTime = ownProps => moment(ownProps.eventDateTime).format('LT');
-
-export const getEventDateLong = (state, ownProps) => moment(getEventDateTime(state, ownProps)).format('dddd, h:mm a');
+export const getEventTime = (state, ownProps) => moment(getEventDateTime(state, ownProps)).format('LT');
 
 export const buildEventVenueData = venue => ({
   name: get(venue, 'name', ''),
@@ -66,12 +64,13 @@ export const getGmapsAnchorUrl = (state) => {
   return lat && lon && buildGmapsAnchorUrl(lat, lon);
 };
 
-export const getCategoryData = state => ({
-  name: get(state, 'events.selected.categoryInfo.name') || get(state, 'events.selected.classifications[0].segment.name', ''),
-  additionalData: get(state, 'events.selected.categoryInfo.subcategories') || get(state, 'events.selected.classifications', []),
-});
+export const getCategoryName = (state, ownProps) =>
+  get(state, `events.categories[${ownProps.event.category_id}].short_name`, '');
 
 // ----- Event Page selectors -----
+export const getEventTitleSelectedEvent = state =>
+  get(state, 'events.selected.name.text') || get(state, 'events.selected.name', '');
+
 export const getEventDescriptionSelectedEvent = state =>
   get(state, 'events.selected.description.text') || get(state, 'events.selected.info', '');
 
@@ -79,3 +78,11 @@ export const getEventImageSelectedEvent = state =>
   get(state, 'events.selected.images[2].url') || get(state, 'events.selected.logo.url', '');
 
 export const getEventPleaseNoteSelectedEvent = state => get(state, 'events.selected.pleaseNote', '');
+
+export const getEventDateLongSelectedEvent = (state, ownProps) =>
+  moment(getEventDateTime(state, ownProps)).format('dddd, h:mm a');
+
+export const getCategoryData = state => ({
+  name: get(state, 'events.selected.categoryInfo.name') || get(state, 'events.selected.classifications[0].segment.name', ''),
+  additionalData: get(state, 'events.selected.categoryInfo.subcategories') || get(state, 'events.selected.classifications', []),
+});
