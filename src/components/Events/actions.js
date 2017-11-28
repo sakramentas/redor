@@ -18,6 +18,7 @@ import {
   FETCH_CATEGORY_DATA,
   FETCH_CATEGORY_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
+  FETCH_CATEGORIES_ID_DATA_SUCCESS,
   OPEN_TICKET,
 } from './action-types';
 import {
@@ -25,6 +26,7 @@ import {
   buildFetchEventsEventbriteEndpoint,
   buildFetchCommonEventbriteEndpoint,
 } from '../../api/endpoints';
+import { buildfetchCategoriesIdData } from './firebase';
 import { sortEvents } from '../../redux/actions/selectors';
 
 
@@ -165,3 +167,16 @@ export const openTicket = url => (dispatch) => {
     .openURL(url)
     .catch(err => console.error('An error occurred', err)); // eslint-disable-line no-console
 };
+
+export const fetchCategoriesIdData = () => {
+  const createBuildfetchCategoriesIdData = buildfetchCategoriesIdData();
+  return dispatch => createBuildfetchCategoriesIdData(dispatch);
+};
+
+export const fetchCategoriesIdDataSuccess = (dispatch, data) =>
+  dispatch({
+    type: FETCH_CATEGORIES_ID_DATA_SUCCESS,
+    payload: {
+      data,
+    },
+  });

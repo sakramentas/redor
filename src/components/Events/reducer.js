@@ -14,6 +14,7 @@ import {
   FETCH_VENUE_DATA_ERROR,
   FETCH_CATEGORY_DATA,
   FETCH_CATEGORY_DATA_SUCCESS,
+  FETCH_CATEGORIES_ID_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
 } from './action-types';
 
@@ -148,6 +149,11 @@ export const eventsReducer = (state = initialState, action) => {
           loading: false,
           categoryInfo: payload.data,
         },
+      };
+    case FETCH_CATEGORIES_ID_DATA_SUCCESS:
+      return {
+        ...state,
+        categories: payload.data,
       };
     // case FETCH_CATEGORY_DATA_ERROR:
     default:

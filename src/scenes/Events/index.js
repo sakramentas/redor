@@ -7,6 +7,7 @@ import {
   fetchEventsData,
   fetchEventsBestData,
   fetchFeesData,
+  fetchCategoriesIdData,
 } from '../../components/Events/actions';
 import EventCard from '../../components/Events/EventCard';
 import EventCardLarge from '../../components/Events/EventCardLarge';
@@ -20,6 +21,7 @@ class Events extends React.Component {
   componentWillMount() {
     this.props.fetchEventsData();
     this.props.fetchEventsBestData();
+    this.props.fetchCategoriesIdData();
   }
 
   render() {
@@ -85,6 +87,7 @@ const mapDispatchToProps = {
   fetchEventsData,
   fetchEventsBestData,
   fetchFeesData,
+  fetchCategoriesIdData,
 };
 
 export default connect(
