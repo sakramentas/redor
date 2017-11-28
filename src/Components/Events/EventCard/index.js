@@ -70,7 +70,7 @@ const EventCard = (props) => {
 
 const mapStateToProps = (state, ownProps) => ({
   eventDateTime: getEventDateTime(state, ownProps),
-  eventTime: getEventTime(ownProps),
+  eventTime: getEventTime(state, ownProps),
   eventImage: getEventImage(state, ownProps),
   eventTitle: getEventTitle(state, ownProps),
 });

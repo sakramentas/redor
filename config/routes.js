@@ -12,7 +12,7 @@ const RouterComponent = () => (
     backButtonTextStyle={{ color: '#FFF' }}
   >
     <Scene key="root">
-      <Scene key="events" component={Events} title="Events in Dublin" />
+      <Scene key="events" component={Events} title="LIVE: Dublin!" />
       <Scene key="eventPage" component={EventPage} title="Event" />
     </Scene>
   </Router>
