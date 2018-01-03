@@ -14,10 +14,6 @@ import EventCardLarge from '../../components/Events/EventCardLarge';
 import { styles } from './styles';
 
 class Events extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   componentWillMount() {
     this.props.fetchEventsData();
     this.props.fetchEventsBestData();
@@ -61,7 +57,7 @@ class Events extends React.Component {
                 </View>
                 ))}
             </Carousel>
-            <View style={{ marginTop: 20 }}>
+            <View style={{ marginTop: 20, padding: 10 }}>
               <Text style={{ color: 'white', marginBottom: 5, fontSize: 18 }}>Next Events</Text>
               {events && Object.keys(events).map(event => (
                 <EventCard

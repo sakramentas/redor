@@ -13,6 +13,7 @@ import {
   getEventTime,
   getEventImage,
   getEventTitle,
+  getCategoryName,
 } from '../selectors';
 import { styles } from './styles';
 
@@ -35,6 +36,7 @@ const EventCard = (props) => {
     eventTime,
     eventImage,
     selectEvent,
+    eventCategoryName
   } = props;
 
   return (
@@ -47,7 +49,7 @@ const EventCard = (props) => {
         source={{ uri: eventImage }}
         style={eventBgImg}
       />
-      <View style={coverOverlay} />
+      <View style={coverOverlay}/>
       <View style={eventInfo}>
         <View style={eventInfoLeft}>
           <Text
@@ -59,9 +61,12 @@ const EventCard = (props) => {
           <Text style={subtext}>
             {eventTime}
           </Text>
+          <Text style={subtext}>
+            {eventCategoryName}
+          </Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={eventDateTime} />
+          <DateTimeBox dateTime={eventDateTime}/>
         </View>
       </View>
     </TouchableOpacity>
@@ -73,6 +78,7 @@ const mapStateToProps = (state, ownProps) => ({
   eventTime: getEventTime(state, ownProps),
   eventImage: getEventImage(state, ownProps),
   eventTitle: getEventTitle(state, ownProps),
+  eventCategoryName: getCategoryName(state, ownProps),
 });
 
 const mapDispatchToProps = { selectEvent };

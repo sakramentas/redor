@@ -13,6 +13,7 @@ import {
   getEventTime,
   getEventImage,
   getEventTitle,
+  getCategoryName,
 } from '../selectors';
 import { styles } from './styles';
 
@@ -35,6 +36,7 @@ const EventCardLarge = (props) => {
     eventTime,
     eventImage,
     selectEvent,
+    eventCategoryName,
   } = props;
 
   return (
@@ -59,6 +61,9 @@ const EventCardLarge = (props) => {
           <Text style={subtext}>
             {eventTime}
           </Text>
+          <Text style={subtext}>
+            {eventCategoryName}
+          </Text>
         </View>
         <View style={eventInfoRight}>
           <DateTimeBox dateTime={eventDateTime} />
@@ -73,6 +78,7 @@ const mapStateToProps = (state, ownProps) => ({
   eventTime: getEventTime(state, ownProps),
   eventImage: getEventImage(state, ownProps),
   eventTitle: getEventTitle(state, ownProps),
+  eventCategoryName: getCategoryName(state, ownProps),
 });
 
 const mapDispatchToProps = { selectEvent };

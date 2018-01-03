@@ -34,6 +34,7 @@ class EventLocation extends Component {
       venueAddress,
       venueCity,
       mapThumbnail,
+      mapThumbnailContainer,
     } = styles;
     const { venueInfo, isLoading, gMapsStaticImageUrl } = this.props;
 
@@ -48,7 +49,7 @@ class EventLocation extends Component {
               <Text style={venueName}> {venueInfo.name}</Text>
               <Text style={venueAddress}> {venueInfo.address}</Text>
               <Text style={venueCity}> {venueInfo.city}, {venueInfo.country}</Text>
-              <TouchableOpacity onPress={this.handleOpenMap}>
+              <TouchableOpacity onPress={this.handleOpenMap} style={mapThumbnailContainer}>
                 <Image
                   source={{ uri: gMapsStaticImageUrl }}
                   style={mapThumbnail}

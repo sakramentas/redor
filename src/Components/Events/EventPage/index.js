@@ -8,11 +8,11 @@ import EventLocation from '../EventLocation';
 import EventCategory from '../EventCategory';
 import { openTicket } from '../actions';
 import {
-  getEventTitle,
+  getEventTitleSelectedEvent,
   getEventDescriptionSelectedEvent,
   getEventPleaseNoteSelectedEvent,
   getEventImageSelectedEvent,
-  getEventDateLong,
+  getEventDateLongSelectedEvent,
 } from '../selectors';
 import { styles } from './styles';
 
@@ -25,11 +25,11 @@ class EventPage extends Component {
   }
 
   renderParallaxForeground() {
-    const { event } = this.props;
+    const { eventTitle } = this.props;
 
     return (
       <View style={styles.artistInfo}>
-        <Text style={styles.text}> {getEventTitle(event)} </Text>
+        <Text style={styles.text}> {eventTitle} </Text>
       </View>
     );
   }
@@ -51,7 +51,7 @@ class EventPage extends Component {
   render() {
     const {
       event,
-      eventDateTime,
+      eventTime,
       openTicket,
       eventPleaseNote,
     } = this.props;
@@ -67,16 +67,16 @@ class EventPage extends Component {
 
     return (
       <ParallaxScrollView
-        backgroundColor="black"
-        contentBackgroundColor="black"
+        backgroundColor="#0e0e0e"
+        contentBackgroundColor="#0e0e0e"
         parallaxHeaderHeight={200}
         renderForeground={this.renderParallaxForeground}
         renderBackground={this.renderParallaxBackground}
       >
-        <View>
+        <View style={{ backgroundColor: '#0e0e0e' }}>
           <View style={eventInfo}>
             <View style={dateTime}>
-              <Text style={subtext}> {eventDateTime}</Text>
+              <Text style={subtext}> {eventTime}</Text>
             </View>
             <View style={tickets}>
               <RkButton onPress={() => openTicket(event.url)}>Find Tickets</RkButton>
@@ -92,9 +92,10 @@ class EventPage extends Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => ({
+const mapStateToProps = (state) => ({
   event: get(state, 'events.selected'),
-  eventDateTime: getEventDateLong(state, ownProps),
+  eventTitle: getEventTitleSelectedEvent(state),
+  eventTime: getEventDateLongSelectedEvent(state),
   eventImage: getEventImageSelectedEvent(state),
   eventDescription: getEventDescriptionSelectedEvent(state),
   eventPleaseNote: getEventPleaseNoteSelectedEvent(state),
