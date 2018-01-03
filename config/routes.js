@@ -5,8 +5,8 @@ import EventPage from '../src/components/Events/EventPage/index';
 
 const RouterComponent = () => (
   <Router
-    getSceneStyle={() => ({ paddingTop: 10, backgroundColor: '#000', color: '#fff' })}
-    navigationBarStyle={{ backgroundColor: 'black', color: '#fff' }}
+    getSceneStyle={() => ({ backgroundColor: '#0e0e0e', color: '#fff' })}
+    navigationBarStyle={{ backgroundColor: '#0e0e0e', color: '#fff', paddingTop: 35, height: 80 }}
     titleStyle={{ color: '#FFF' }}
     barButtonIconStyle={{ tintColor: '#FFF' }}
     backButtonTextStyle={{ color: '#FFF' }}

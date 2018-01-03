@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 export const styles = StyleSheet.create({
   eventsScene: {
     flex: 1,
-    backgroundColor: '#000000',
+    backgroundColor: '#0e0e0e',
     alignItems: 'center',
     justifyContent: 'center',
   },
