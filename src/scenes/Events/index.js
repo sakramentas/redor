@@ -8,7 +8,7 @@ import {
   fetchEventsBestData,
   fetchFeesData,
   fetchCategoriesIdData,
-} from '../../components/Events/actions';
+} from '../../redux/Events/actions';
 import EventCard from '../../components/Events/EventCard';
 import EventCardLarge from '../../components/Events/EventCardLarge';
 import { styles } from './styles';

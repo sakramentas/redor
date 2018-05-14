@@ -6,14 +6,14 @@ import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { RkButton } from 'react-native-ui-kitten';
 import EventLocation from '../EventLocation';
 import EventCategory from '../EventCategory';
-import { openTicket } from '../actions';
+import { openTicket } from '../../../redux/Events/actions';
 import {
   getEventTitleSelectedEvent,
   getEventDescriptionSelectedEvent,
   getEventPleaseNoteSelectedEvent,
   getEventImageSelectedEvent,
   getEventDateLongSelectedEvent,
-} from '../selectors';
+} from '../../../redux/Events/selectors';
 import { styles } from './styles';
 
 class EventPage extends Component {
@@ -93,7 +93,7 @@ class EventPage extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  event: get(state, 'events.selected'),
+  event: get(state, 'events.selected', {}),
   eventTitle: getEventTitleSelectedEvent(state),
   eventTime: getEventDateLongSelectedEvent(state),
   eventImage: getEventImageSelectedEvent(state),

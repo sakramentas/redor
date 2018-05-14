@@ -7,19 +7,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { DateTimeBox } from '../DateTimeBox';
-import { selectEvent } from '../actions';
+import { selectEvent } from '../../../redux/Events/actions';
 import {
   getEventDateTime,
   getEventTime,
   getEventImage,
   getEventTitle,
   getCategoryName,
-} from '../selectors';
+} from '../../../redux/Events/selectors';
 import { styles } from './styles';
 import {
   transformDateFull,
   transformTimefull
-} from '../../../helpers';
+} from '../../../shared/helpers';
 
 const EventCardLarge = (props) => {
   const { event } = props;

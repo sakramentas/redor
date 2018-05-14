@@ -2,7 +2,7 @@ import {
   FETCH_FEES_DATA,
   FETCH_FEES_DATA_SUCCESS,
   FETCH_FEES_DATA_ERROR,
-} from '../../components/Events/action-types';
+} from '../Events/action-types';
 
 const initialState = {
   loading: false,

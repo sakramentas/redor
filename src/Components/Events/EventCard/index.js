@@ -7,14 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { DateTimeBox } from '../DateTimeBox';
-import { selectEvent } from '../actions';
+import { selectEvent } from '../../../redux/Events/actions';
 import {
   getEventDateTime,
   getEventTime,
   getEventImage,
   getEventTitle,
   getCategoryName,
-} from '../selectors';
+} from '../../../redux/Events/selectors';
 import { styles } from './styles';
 
 const EventCard = (props) => {
@@ -43,7 +43,7 @@ const EventCard = (props) => {
     <TouchableOpacity
       style={eventCard}
       key={event.id}
-      onPress={() => selectEvent(event.id)}
+      onPress={() => selectEvent(event)}
     >
       <Image
         source={{ uri: eventImage }}

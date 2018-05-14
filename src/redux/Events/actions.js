@@ -26,9 +26,8 @@ import {
   buildFetchEventsEventbriteEndpoint,
   buildFetchCommonEventbriteEndpoint,
 } from '../../api/endpoints';
-import { buildfetchCategoriesIdData } from './firebase';
-import { sortEvents } from '../../redux/actions/selectors';
-
+import { buildfetchCategoriesIdData } from '../../components/Events/firebase';
+import { sortEvents } from './helpers';
 
 export const fetchEventsData = () => (dispatch) => {
   dispatch({ type: FETCH_EVENTS_DATA });

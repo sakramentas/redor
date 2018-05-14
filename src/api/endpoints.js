@@ -1,4 +1,4 @@
-import { getDateNowFull } from '../helpers';
+import { getDateNowFull } from '../shared/helpers';
 
 export const TICKETMASTER_API_KEY = 'TLAdwV0eyURqxMPWSG8lnw9IvLH37GEZ';
 export const EVENTBRITE_API_KEY = 'SV7XRDVTKSTYYJOV4NU4';
