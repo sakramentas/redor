@@ -75,9 +75,7 @@ export const eventsReducer = (state = initialState, action) => {
     case SELECT_EVENT:
       return {
         ...state,
-        selected: {
-          ...state.hashList[payload],
-        },
+        selected: payload,
       };
     case FETCH_FEES_DATA:
       return {

@@ -40,33 +40,37 @@ class Events extends React.Component {
             <Text style={loadingText}>Bringing the best events in Dublin to you...</Text>
           </View>
           :
-          <ScrollView>
-            <Carousel
-              height={300}
-              delay={4000}
-              indicatorAtBottom
-              indicatorSize={20}
-              indicatorColor="#FFF"
-            >
-              {events && Object.keys(eventsBest).map(event => (
-                <View style={{ marginBottom: 30 }}>
-                  <EventCardLarge
-                    event={eventsBest[event]}
-                    key={eventsBest[event].id}
+          <View>
+            {events.length > 0 && eventsBest.length > 0 &&
+            <ScrollView>
+              <Carousel
+                height={300}
+                delay={4000}
+                indicatorAtBottom
+                indicatorSize={20}
+                indicatorColor="#FFF"
+              >
+                {eventsBest.map(event => (
+                  <View style={{ marginBottom: 30, height: 300 }}>
+                    <EventCardLarge
+                      event={event}
+                      key={event.id}
+                    />
+                  </View>
+                ))}
+              </Carousel>
+              <View style={{ marginTop: 20, padding: 10 }}>
+                <Text style={{ color: 'white', marginBottom: 5, fontSize: 18 }}>Next Events</Text>
+                {events.map(event => (
+                  <EventCard
+                    event={event}
+                    key={events.id}
                   />
-                </View>
                 ))}
-            </Carousel>
-            <View style={{ marginTop: 20, padding: 10 }}>
-              <Text style={{ color: 'white', marginBottom: 5, fontSize: 18 }}>Next Events</Text>
-              {events && Object.keys(events).map(event => (
-                <EventCard
-                  event={events[event]}
-                  key={events[event].id}
-                />
-                ))}
-            </View>
-          </ScrollView>
+              </View>
+            </ScrollView>
+            }
+          </View>
         }
       </View>
     );
@@ -74,9 +78,9 @@ class Events extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  events: get(state, 'events.list', {}),
-  eventsBest: get(state, 'events.listBest', {}),
-  isLoading: get(state, 'events.loading', false),
+  events: get(state, 'events.list', []),
+  eventsBest: get(state, 'events.listBest', []),
+  isLoading: get(state, 'events.loading', true),
 });
 
 const mapDispatchToProps = {

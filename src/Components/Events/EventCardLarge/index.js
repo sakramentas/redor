@@ -16,6 +16,10 @@ import {
   getCategoryName,
 } from '../selectors';
 import { styles } from './styles';
+import {
+  transformDateFull,
+  transformTimefull
+} from '../../../helpers';
 
 const EventCardLarge = (props) => {
   const { event } = props;
@@ -43,10 +47,10 @@ const EventCardLarge = (props) => {
     <TouchableOpacity
       style={eventCard}
       key={event.id}
-      onPress={() => selectEvent(event.id)}
+      onPress={() => selectEvent(event)}
     >
       <Image
-        source={{ uri: eventImage }}
+        source={{ uri: event.images[0].url }}
         style={eventBgImg}
       />
       <View style={coverOverlay} />
@@ -56,17 +60,17 @@ const EventCardLarge = (props) => {
             style={eventTitle}
             numberOfLines={1}
           >
-            {props.eventTitle}
+            {event.name}
           </Text>
           <Text style={subtext}>
-            {eventTime}
+            {transformTimefull(event.dates.start.dateTime)}
           </Text>
           <Text style={subtext}>
             {eventCategoryName}
           </Text>
         </View>
         <View style={eventInfoRight}>
-          <DateTimeBox dateTime={eventDateTime} />
+          <DateTimeBox dateTime={event.dates.start.dateTime} />
         </View>
       </View>
     </TouchableOpacity>
