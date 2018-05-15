@@ -3,8 +3,8 @@ import { Text, View, Image, Linking, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { styles } from './styles';
-import { getCategoryData } from '../../../redux/Events/selectors';
-import { fetchCategoryData } from '../../../redux/Events/actions';
+import { getCategoryData } from '../../core/redux/Events/selectors';
+import { fetchCategoryData } from '../../core/redux/Events/actions';
 
 class EventCategory extends Component {
   constructor(props) {

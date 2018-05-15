@@ -17,7 +17,7 @@ import {
   FETCH_CATEGORIES_ID_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
 } from './action-types';
-import EventModel from '../../core/models/Event';
+import EventModel from '../../models/Event';
 
 const initialState = {
   loading: false,

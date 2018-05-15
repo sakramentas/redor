@@ -25,8 +25,8 @@ import {
   buildFetchEventsTicketmasterEndpoint,
   buildFetchEventsEventbriteEndpoint,
   buildFetchCommonEventbriteEndpoint,
-} from '../../api/endpoints';
-import { buildfetchCategoriesIdData } from '../../components/firebase';
+} from '../../../api/endpoints';
+import { buildfetchCategoriesIdData } from '../../../components/firebase';
 import { sortEvents } from './helpers';
 
 export const fetchEventsData = () => (dispatch) => {

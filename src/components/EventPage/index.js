@@ -4,16 +4,16 @@ import { get } from 'lodash';
 import { Text, View, Image } from 'react-native';
 import ParallaxScrollView from 'react-native-parallax-scroll-view';
 import { RkButton } from 'react-native-ui-kitten';
-import EventLocation from '../EventLocation';
-import EventCategory from '../EventCategory';
-import { openTicket } from '../../../redux/Events/actions';
+import EventLocation from '../EventLocation/index';
+import EventCategory from '../EventCategory/index';
+import { openTicket } from '../../core/redux/Events/actions';
 import {
   getEventTitleSelectedEvent,
   getEventDescriptionSelectedEvent,
   getEventPleaseNoteSelectedEvent,
   getEventImageSelectedEvent,
   getEventDateLongSelectedEvent,
-} from '../../../redux/Events/selectors';
+} from '../../core/redux/Events/selectors';
 import { styles } from './styles';
 
 class EventPage extends Component {
@@ -25,22 +25,22 @@ class EventPage extends Component {
   }
 
   renderParallaxForeground() {
-    const { eventTitle } = this.props;
+    const { name } = this.props.event;
 
     return (
       <View style={styles.artistInfo}>
-        <Text style={styles.text}> {eventTitle} </Text>
+        <Text style={styles.text}> {name} </Text>
       </View>
     );
   }
 
   renderParallaxBackground() {
-    const { eventImage } = this.props;
+    const { image } = this.props.event;
 
     return (
       <View key="background">
         <Image
-          source={{ uri: eventImage }}
+          source={{ uri: image }}
           style={styles.headerBgImage}
         />
         <View style={styles.headerOverlay} />
@@ -50,11 +50,11 @@ class EventPage extends Component {
 
   render() {
     const {
-      event,
-      eventTime,
       openTicket,
-      eventPleaseNote,
-    } = this.props;
+      description,
+      url,
+    } = this.props.event;
+    const { event } = this.props;
     const {
       eventInfo,
       dateTime,
@@ -76,14 +76,14 @@ class EventPage extends Component {
         <View style={{ backgroundColor: '#0e0e0e' }}>
           <View style={eventInfo}>
             <View style={dateTime}>
-              <Text style={subtext}> {eventTime}</Text>
+              <Text style={subtext}> {event.dateTime}</Text>
             </View>
             <View style={tickets}>
-              <RkButton onPress={() => openTicket(event.url)}>Find Tickets</RkButton>
+              <RkButton onPress={() => openTicket(url)}>Find Tickets</RkButton>
             </View>
           </View>
-          <Text style={eventDescription}> {this.props.eventDescription}</Text>
-          <Text style={subtext2}> {eventPleaseNote}</Text>
+          <Text style={eventDescription}> {description}</Text>
+          {/*<Text style={subtext2}> {eventPleaseNote}</Text>*/}
           <EventCategory eventData={event} />
           <EventLocation eventData={event} />
         </View>
@@ -94,11 +94,6 @@ class EventPage extends Component {
 
 const mapStateToProps = (state) => ({
   event: get(state, 'events.selected', {}),
-  eventTitle: getEventTitleSelectedEvent(state),
-  eventTime: getEventDateLongSelectedEvent(state),
-  eventImage: getEventImageSelectedEvent(state),
-  eventDescription: getEventDescriptionSelectedEvent(state),
-  eventPleaseNote: getEventPleaseNoteSelectedEvent(state),
 });
 
 const mapDispatchToProps = { openTicket };

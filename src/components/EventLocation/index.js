@@ -3,8 +3,8 @@ import { Text, View, Image, Linking, TouchableOpacity } from 'react-native';
 import { connect } from 'react-redux';
 import { get } from 'lodash';
 import { styles } from './styles';
-import { getEventVenue, getGmapsStaticImageUrl, getGmapsAnchorUrl } from '../../../redux/Events/selectors';
-import { fetchVenueData } from '../../../redux/Events/actions';
+import { getEventVenue, getGmapsStaticImageUrl, getGmapsAnchorUrl } from '../../core/redux/Events/selectors';
+import { fetchVenueData } from '../../core/redux/Events/actions';
 
 class EventLocation extends Component {
   constructor(props) {
