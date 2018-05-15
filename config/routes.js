@@ -1,7 +1,7 @@
 import React from 'react';
 import { Scene, Router } from 'react-native-router-flux';
 import Events from '../src/scenes/Events/index';
-import EventPage from '../src/components/Events/EventPage/index';
+import EventPage from '../src/components/EventPage/index';
 
 const RouterComponent = () => (
   <Router

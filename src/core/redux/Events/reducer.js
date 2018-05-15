@@ -17,6 +17,7 @@ import {
   FETCH_CATEGORIES_ID_DATA_SUCCESS,
   FETCH_CATEGORY_DATA_ERROR,
 } from './action-types';
+import EventModel from '../../core/models/Event';
 
 const initialState = {
   loading: false,
@@ -42,6 +43,10 @@ export const eventsReducer = (state = initialState, action) => {
         loading: false,
         list: payload,
         hashList: newList,
+        normalizedList: payload.reduce((acc, curr) => {
+          acc[curr.id] = new EventModel(curr);
+          return acc;
+        }, {}),
       };
     case FETCH_EVENTS_DATA_ERROR:
       return {

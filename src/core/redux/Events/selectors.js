@@ -5,6 +5,12 @@ import {
   buildGmapsAnchorUrl,
 } from '../../api/endpoints';
 
+export const getAllEvents = (state) => {
+  const events = get(state, 'events.list');
+
+  console.log('EVENTS ==', events);
+};
+
 export const getEventTitle = (state, ownProps) => {
   const id = get(ownProps, 'event.id');
 

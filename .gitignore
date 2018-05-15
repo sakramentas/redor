@@ -5,3 +5,7 @@ npm-debug.*
 src/\.DS_Store
 
 \.idea/workspace\.xml
+
+src/components/\.DS_Store
+
+src/components/Events/\.DS_Store
