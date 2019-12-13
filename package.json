@@ -31,7 +31,7 @@
     "firebase": "^4.6.2",
     "lodash": "^4.17.4",
     "moment": "^2.19.0",
-    "npm": "^4.6.1",
+    "npm": "^6.13.4",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
     "react-native-carousel-view": "^0.5.1",
