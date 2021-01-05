@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@shoutem/ui": "^0.21.3",
-    "axios": "^0.16.2",
+    "axios": "^0.21.1",
     "expo": "^21.0.0",
     "firebase": "^4.6.2",
     "lodash": "^4.17.4",
